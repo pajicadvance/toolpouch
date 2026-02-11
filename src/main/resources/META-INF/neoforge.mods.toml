@@ -16,6 +16,8 @@ credits = "${contributors}"
 
 description = '''${description}'''
 
+[modproperties.${id}."yumi:entrypoints"]
+"lambdynlights:initializer" = "${group}.${id}.renderer.PlayerLanternDynamicLighting"
 [[mixins]]
 config = "${id}.mixins.json"
 [[accessTransformers]]

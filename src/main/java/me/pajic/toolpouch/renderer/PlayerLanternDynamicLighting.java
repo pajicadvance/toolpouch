@@ -1,0 +1,23 @@
+package me.pajic.toolpouch.renderer;
+
+import dev.lambdaurora.lambdynlights.api.DynamicLightsContext;
+import dev.lambdaurora.lambdynlights.api.DynamicLightsInitializer;
+import dev.lambdaurora.lambdynlights.api.entity.luminance.EntityLuminance;
+import me.pajic.toolpouch.ToolPouch;
+import net.minecraft.world.entity.EntityType;
+import org.jspecify.annotations.NonNull;
+
+public class PlayerLanternDynamicLighting implements DynamicLightsInitializer {
+
+	public static final EntityLuminance.Type CONSTANT = EntityLuminance.Type.registerSimple(
+			ToolPouch.id("player_lantern"),
+			PlayerLanternLuminance.INSTANCE
+	);
+
+	@Override
+	public void onInitializeDynamicLights(@NonNull DynamicLightsContext context) {
+		context.entityLightSourceManager().onRegisterEvent().register(registerContext ->
+				registerContext.register(EntityType.PLAYER, PlayerLanternLuminance.INSTANCE)
+		);
+	}
+}

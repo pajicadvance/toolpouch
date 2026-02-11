@@ -1,0 +1,16 @@
+package me.pajic.toolpouch.util;
+
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+
+public class ClientUtil {
+
+	public static boolean shouldScope = false;
+	public static float zoomModifier = 1.0F;
+
+	public static void onClientLevelChange() {
+		ToolPouchUtil.ITEM_SUGGESTIONS.clear();
+		ToolPouchUtil.ITEM_SUGGESTIONS.addAll(BuiltInRegistries.ITEM.keySet().stream().map(Identifier::toString).toList());
+		BuiltInRegistries.ITEM.listTagIds().forEach(tag -> ToolPouchUtil.ITEM_SUGGESTIONS.add("#" + tag.location()));
+	}
+}

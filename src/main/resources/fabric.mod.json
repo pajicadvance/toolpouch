@@ -28,6 +28,12 @@
     ],
     "client": [
       "${group}.${id}.platform.fabric.FabricClientEntrypoint"
+    ],
+    "shulkerboxtooltip": [
+      "${group}.${id}.tooltip.ToolPouchTooltipCompat"
+    ],
+    "lambdynlights:initializer": [
+      "${group}.${id}.renderer.PlayerLanternDynamicLighting"
     ]
   },
   "mixins": [

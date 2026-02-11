@@ -23,6 +23,14 @@ platform {
 			slug("fzzy-config")
 			versionRange = "*"
 		}
+		optional("immersiveoverlays") {
+			slug("immersive-overlays")
+			versionRange = "*"
+		}
+		optional("lambdynlights") {
+			slug("lambdynamiclights")
+			versionRange = "*"
+		}
 		optional("modmenu") {
 			slug("modmenu")
 		}
@@ -48,19 +56,6 @@ loom {
 	}
 }
 
-stonecutter {
-	filters.exclude("**/*.accesswidener", "**/*.cfg")
-	val dir = eval(current.version, ">1.21.10")
-	replacements.string {
-		direction = dir
-		replace("ValidatedIdentifier", "ValidatedIdentifier")
-	}
-	replacements.string {
-		direction = dir
-		replace("ResourceLocation", "Identifier")
-	}
-}
-
 fletchingTable {
 	mixins.create("main") {
 		mixin("default", "${prop("mod.id")}.mixins.json")
@@ -72,6 +67,7 @@ repositories {
 	maven("https://maven.fzzyhmstrs.me/") { name = "Fzzy Config" }
 	maven("https://maven.terraformersmc.com/" ) { name = "TerraformersMC" }
 	maven("https://thedarkcolour.github.io/KotlinForForge/") { name = "KotlinForForge" }
+	maven("https://maven.gegy.dev") { name = "Gegy" }
 	maven("https://jitpack.io") { name = "Jitpack" }
 	exclusiveContent {
 		forRepository { maven("https://api.modrinth.com/maven") { name = "Modrinth" } }
@@ -93,10 +89,12 @@ dependencies {
 	modImplementation("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
 	implementation("com.moulberry:mixinconstraints:${prop("deps.mixinconstraints")}")
 	include("com.moulberry:mixinconstraints:${prop("deps.mixinconstraints")}")
-	modImplementation("com.github.ramixin:mixson-fabric:${prop("deps.mixson")}") {
-		exclude(group = "net.fabricmc.fabric-api", module = "fabric-api")
-	}
-	include("com.github.ramixin:mixson-fabric:${prop("deps.mixson")}") {
-		exclude(group = "net.fabricmc.fabric-api", module = "fabric-api")
-	}
+	//modRuntimeOnly("maven.modrinth:immersive-overlays:${prop("deps.io")}-fabric")
+	modCompileOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:${prop("deps.ldl")}")
+	modRuntimeOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${prop("deps.ldl")}")
+	modImplementation("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-fabric")
+	modImplementation("maven.modrinth:spyglass-astronomy:${prop("deps.sa")}")
+	modCompileOnly("maven.modrinth:aileron:${prop("deps.aileron")}")
+	modCompileOnly("maven.modrinth:raised:${prop("deps.raised")}")
+	modRuntimeOnly("maven.modrinth:sodium:mc1.21.11-0.8.4-fabric")
 }

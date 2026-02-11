@@ -19,19 +19,14 @@ platform {
 			slug("fzzy-config")
 			forgeVersionRange = "[0,)"
 		}
-	}
-}
-
-stonecutter {
-	filters.exclude("**/*.accesswidener", "**/*.cfg")
-	val dir = eval(current.version, ">1.21.10")
-	replacements.string {
-		direction = dir
-		replace("ValidatedIdentifier", "ValidatedIdentifier")
-	}
-	replacements.string {
-		direction = dir
-		replace("ResourceLocation", "Identifier")
+		required("immersiveoverlays") {
+			slug("immersive-overlays")
+			forgeVersionRange = "[0,)"
+		}
+		required("lambdynlights") {
+			slug("lambdynamiclights")
+			forgeVersionRange = "[0,)"
+		}
 	}
 }
 
@@ -77,6 +72,7 @@ repositories {
 	maven("https://maven.parchmentmc.org") { name = "ParchmentMC" }
 	maven("https://maven.fzzyhmstrs.me/") { name = "Fzzy Config" }
 	maven("https://thedarkcolour.github.io/KotlinForForge/") { name = "KotlinForForge" }
+	maven("https://maven.gegy.dev") { name = "Gegy" }
 	maven("https://jitpack.io") { name = "Jitpack" }
 	exclusiveContent {
 		forRepository { maven("https://api.modrinth.com/maven") { name = "Modrinth" } }
@@ -85,11 +81,28 @@ repositories {
 }
 
 dependencies {
+	val mappingsAttribute = Attribute.of("net.minecraft.mappings", String::class.java)
+	attributesSchema {
+		attribute(mappingsAttribute)
+	}
+
 	implementation( "me.fzzyhmstrs:fzzy_config:${prop("deps.fzzy_config")}+neoforge")
 	implementation("com.moulberry:mixinconstraints:${prop("deps.mixinconstraints")}")
 	jarJar("com.moulberry:mixinconstraints:${prop("deps.mixinconstraints")}")
-	implementation("com.github.ramixin:mixson-neoforge:${prop("deps.mixson")}")
-	jarJar("com.github.ramixin:mixson-neoforge:${prop("deps.mixson")}")
+	runtimeOnly("maven.modrinth:immersive-overlays:${prop("deps.io")}-neoforge")
+	compileOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:${prop("deps.ldl")}") {
+		attributes {
+			attribute(mappingsAttribute, "mojmap")
+		}
+	}
+	runtimeOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${prop("deps.ldl")}") {
+		attributes {
+			attribute(mappingsAttribute, "mojmap")
+		}
+	}
+	implementation("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-neoforge")
+	compileOnly("maven.modrinth:aileron:${prop("deps.aileron")}")
+	compileOnly("maven.modrinth:raised:${prop("deps.raised")}")
 }
 
 tasks.named("createMinecraftArtifacts") {
