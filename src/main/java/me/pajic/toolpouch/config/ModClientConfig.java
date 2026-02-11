@@ -22,7 +22,7 @@ public class ModClientConfig extends Config {
 	public InfoOverlayClientSettings infoOverlaySettings = new InfoOverlayClientSettings();
 	public MinimapOverlaySettings minimapOverlaySettings = new MinimapOverlaySettings();
 	public ValidatedBoolean showUIHints = new ValidatedBoolean(true);
-	public ValidatedBoolean quickSelect = new ValidatedBoolean(false);
+	public ValidatedBoolean quickSelect = new ValidatedBoolean(true);
 	public ValidatedBoolean scrollableZoom = new ValidatedBoolean(true);
 	public ValidatedBoolean rememberZoomLevel = new ValidatedBoolean(true);
 

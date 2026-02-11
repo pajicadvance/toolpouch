@@ -19,11 +19,11 @@ platform {
 			slug("fzzy-config")
 			forgeVersionRange = "[0,)"
 		}
-		required("immersiveoverlays") {
+		optional("immersiveoverlays") {
 			slug("immersive-overlays")
 			forgeVersionRange = "[0,)"
 		}
-		required("lambdynlights") {
+		optional("lambdynlights") {
 			slug("lambdynamiclights")
 			forgeVersionRange = "[0,)"
 		}
@@ -89,7 +89,7 @@ dependencies {
 	implementation( "me.fzzyhmstrs:fzzy_config:${prop("deps.fzzy_config")}+neoforge")
 	implementation("com.moulberry:mixinconstraints:${prop("deps.mixinconstraints")}")
 	jarJar("com.moulberry:mixinconstraints:${prop("deps.mixinconstraints")}")
-	runtimeOnly("maven.modrinth:immersive-overlays:${prop("deps.io")}-neoforge")
+	//runtimeOnly("maven.modrinth:immersive-overlays:${prop("deps.io")}-neoforge")
 	compileOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:${prop("deps.ldl")}") {
 		attributes {
 			attribute(mappingsAttribute, "mojmap")

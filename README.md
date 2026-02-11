@@ -16,12 +16,14 @@ Optional but highly recommended:
 
 ## Using the Tool Pouch
 
+**Check out the image gallery for the crafting recipe, the look of the info overlay, and some additional info**
+
 - Open the pouch by right-clicking it from your hands or pressing a keybind (default H).
 - You can carry multiple pouches, but only the items from the first one in your inventory will get used.
 - The Tool Pouch has 16 (4x4) slots for storing your items.
 - It can be upgraded to a Netherite Tool Pouch in the smithing table to make it fireproof and increase storage to 25 (5x5) slots.
 - The storage capacity of both pouches is configurable, up to 256 (16x16) slots.
-- Pouches can be attached to and detached from leggings in the crafting menu. The Netherite Tool Pouch can only be attached to fireproof leggings (like netherite). The attached pouch can be opened by pressing a keybind (default G) while the leggings are equipped.
+- Pouches can be attached to and detached from leggings in the crafting menu. The Netherite Tool Pouch can only be attached to fireproof leggings (like netherite). The attached pouch can be opened by pressing a keybind (default H) while the leggings are equipped.
 - Pouches have restrictions on which and how many of each item can be stored inside them. These restrictions can be configured.
 - Both pouches can be dyed. Use pouches on a cauldron filled with water to clear the dye.
 - Installing Shulker Box Tooltip will let you see which items the pouch contains inside the tooltip. The tooltip color will also change based on the dye on the pouch.
