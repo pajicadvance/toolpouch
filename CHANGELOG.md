@@ -1,1 +1,1 @@
-- Initial release.
+- Fixed crash on launch on NeoForge when Shulker Box Tooltip is not installed.

@@ -11,6 +11,7 @@ import me.pajic.toolpouch.network.NetworkClientEvents;
 import me.pajic.toolpouch.network.NetworkEvents;
 import me.pajic.toolpouch.recipe.ModRecipes;
 import me.pajic.toolpouch.tooltip.PreviewExtensionPoint;
+import me.pajic.toolpouch.util.CompatFlags;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
@@ -62,7 +63,7 @@ public class NeoforgeEntrypoint {
 	private static void initCauldronInteractionAndTooltip(FMLCommonSetupEvent event) {
 		CauldronInteraction.WATER.map().put(ModItems.TOOL_POUCH, CauldronInteraction::dyedItemIteration);
 		CauldronInteraction.WATER.map().put(ModItems.NETHERITE_TOOL_POUCH, CauldronInteraction::dyedItemIteration);
-		PreviewExtensionPoint.register();
+		if (CompatFlags.SBT_LOADED) PreviewExtensionPoint.register();
 	}
 
 	@SubscribeEvent
