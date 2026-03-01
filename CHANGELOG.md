@@ -1,1 +1,1 @@
-- Fixed crash on launch on NeoForge when Shulker Box Tooltip is not installed.
+- Fixed lantern renderer repositioning models from other mods by accident.

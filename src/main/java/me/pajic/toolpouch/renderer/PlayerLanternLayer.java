@@ -20,6 +20,7 @@ public class PlayerLanternLayer extends RenderLayer<AvatarRenderState, PlayerMod
 
 	@Override
 	public void submit(@NonNull PoseStack poseStack, @NonNull SubmitNodeCollector nodeCollector, int packedLight, AvatarRenderState renderState, float yRot, float xRot) {
+		poseStack.pushPose();
 		Vec3 offset = !renderState.chestEquipment.isEmpty() || !renderState.legsEquipment.isEmpty() ?
 				new Vec3(-0.05F, 0.75F, 0F) : new Vec3(-0.05F, 0.75F, 0.05F);
 		getParentModel().body.translateAndRotate(poseStack);
@@ -33,5 +34,6 @@ public class PlayerLanternLayer extends RenderLayer<AvatarRenderState, PlayerMod
 				OverlayTexture.NO_OVERLAY,
 				renderState.outlineColor
 		);
+		poseStack.popPose();
 	}
 }
