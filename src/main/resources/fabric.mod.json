@@ -28,6 +28,9 @@
     ],
     "client": [
       "${group}.${id}.platform.fabric.FabricClientEntrypoint"
+    ],
+    "lambdynlights:initializer": [
+      "${group}.${id}.renderer.PlayerLanternDynamicLighting"
     ]
   },
   "mixins": [

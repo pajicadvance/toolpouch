@@ -22,6 +22,14 @@ platform {
 			slug("fzzy-config")
 			versionRange = "*"
 		}
+		optional("immersiveoverlays") {
+			slug("immersive-overlays")
+			versionRange = "*"
+		}
+		optional("lambdynlights") {
+			slug("lambdynamiclights")
+			versionRange = "*"
+		}
 		optional("modmenu") {}
 	}
 }
@@ -50,6 +58,7 @@ repositories {
 	strictMaven("https://maven.fzzyhmstrs.me/", "me.fzzyhmstrs") { name = "Fzzy Config" }
 	strictMaven("https://maven.terraformersmc.com/", "com.terraformersmc") { name = "TerraformersMC" }
 	strictMaven("https://jitpack.io") { name = "Jitpack" }
+	strictMaven("https://maven.gegy.dev") { name = "Gegy" }
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
 }
 
@@ -61,10 +70,6 @@ dependencies {
 	implementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
 	localRuntime("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
 	implementation("me.fzzyhmstrs:fzzy_config:${prop("deps.fzzy_config")}")
-	implementation("com.github.ramixin:mixson-fabric:${prop("deps.mixson")}") {
-		exclude(group = "net.fabricmc.fabric-api", module = "fabric-api")
-	}
-	include("com.github.ramixin:mixson-fabric:${prop("deps.mixson")}") {
-		exclude(group = "net.fabricmc.fabric-api", module = "fabric-api")
-	}
+	compileOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:${prop("deps.ldl")}")
+	compileOnly("com.github.pajicadvance:aileron:1.2.1")
 }

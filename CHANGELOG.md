@@ -1,0 +1,2 @@
+- Updated to Minecraft 26.1.
+- Reverted back to standard versioning scheme.
