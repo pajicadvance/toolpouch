@@ -20,11 +20,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class DetachToolPouchRecipe extends CustomRecipe {
 
-	public static final MapCodec<DetachToolPouchRecipe> MAP_CODEC = MapCodec.unit(DetachToolPouchRecipe::new);
-	public static final StreamCodec<RegistryFriendlyByteBuf, DetachToolPouchRecipe> STREAM_CODEC = StreamCodec.unit(new DetachToolPouchRecipe());
+	private static final DetachToolPouchRecipe INSTANCE = new DetachToolPouchRecipe();
+	public static final MapCodec<DetachToolPouchRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);
+	public static final StreamCodec<RegistryFriendlyByteBuf, DetachToolPouchRecipe> STREAM_CODEC = StreamCodec.unit(INSTANCE);
 
 	@Override
-	public boolean matches(CraftingInput input, @NotNull Level level) {
+	public boolean matches(@NotNull CraftingInput input, @NotNull Level level) {
 		if (!ToolPouch.CONFIG.canAttachToLeggings.get() || input.size() != 1) return false;
 		ItemStack itemStack = input.getItem(0);
 		return !itemStack.isEmpty() && GameplayUtil.isLeggingsWithPouchAttached(itemStack);

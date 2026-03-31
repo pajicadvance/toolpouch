@@ -22,13 +22,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class AttachToolPouchRecipe extends CustomRecipe {
 
-	public static final MapCodec<AttachToolPouchRecipe> MAP_CODEC = MapCodec.unit(AttachToolPouchRecipe::new);
-	public static final StreamCodec<RegistryFriendlyByteBuf, AttachToolPouchRecipe> STREAM_CODEC = StreamCodec.unit(new AttachToolPouchRecipe());
+	private static final AttachToolPouchRecipe INSTANCE = new AttachToolPouchRecipe();
+	public static final MapCodec<AttachToolPouchRecipe> MAP_CODEC = MapCodec.unit(INSTANCE);
+	public static final StreamCodec<RegistryFriendlyByteBuf, AttachToolPouchRecipe> STREAM_CODEC = StreamCodec.unit(INSTANCE);
 
 	private ItemStack toolPouch = ItemStack.EMPTY;
 
 	@Override
-	public boolean matches(CraftingInput input, @NotNull Level level) {
+	public boolean matches(@NotNull CraftingInput input, @NotNull Level level) {
 		if (ToolPouch.CONFIG.canAttachToLeggings.get() && input.size() == 2) {
 			ItemStack leggings = ItemStack.EMPTY;
 			boolean hasToolPouch = false;
