@@ -253,11 +253,11 @@ public class InfoOverlays {
         int offsetY = ToolPouchClient.CONFIG.infoOverlaySettings.offsetY.get();
         int raisedOffsetX = 0;
         int raisedOffsetY = 0;
-        /*if (CompatFlags.RAISED_LOADED) {
+        if (CompatFlags.RAISED_LOADED) {
             IntIntImmutablePair offsets = RaisedCompat.getOtherComponentOffsets();
             raisedOffsetX = offsets.leftInt();
             raisedOffsetY = offsets.rightInt();
-        }*/
+        }
 
         IntIntImmutablePair position;
         switch (ToolPouchClient.CONFIG.infoOverlaySettings.position.get()) {

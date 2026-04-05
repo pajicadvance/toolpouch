@@ -2,6 +2,7 @@ package me.pajic.toolpouch.hud;
 
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import me.pajic.toolpouch.ToolPouchClient;
+import me.pajic.toolpouch.util.CompatFlags;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -26,7 +27,10 @@ public class MinimapOverlay {
 
 	@SuppressWarnings("DataFlowIssue")
 	public static void render(GuiGraphicsExtractor guiGraphics) {
-		if (minimapOn && MC.player != null && MC.level != null) {
+		if (
+				minimapOn && MC.player != null && MC.level != null && !MC.options.hideGui &&
+				!Minecraft.getInstance().gui.getDebugOverlay().showDebugScreen()
+		) {
 			List<ItemStack> maps = ToolPouchUtil.getItemsFromToolPouch(MC.player, stack -> stack.has(DataComponents.MAP_ID));
 			if (!maps.isEmpty()) {
 				ItemStack map = maps.getFirst();
@@ -44,11 +48,11 @@ public class MinimapOverlay {
 					};
 					int raisedOffsetX = 0;
 					int raisedOffsetY = 0;
-					/*if (CompatFlags.RAISED_LOADED) {
+					if (CompatFlags.RAISED_LOADED) {
 						IntIntImmutablePair offsets = RaisedCompat.getOtherComponentOffsets();
 						raisedOffsetX = offsets.leftInt();
 						raisedOffsetY = offsets.rightInt();
-					}*/
+					}
 
 					IntIntImmutablePair position;
 					switch (ToolPouchClient.CONFIG.minimapOverlaySettings.position.get()) {

@@ -1,5 +1,4 @@
 package me.pajic.toolpouch.tooltip;
-/*
 
 import com.misterpemodder.shulkerboxtooltip.api.ShulkerBoxTooltipApi;
 import com.misterpemodder.shulkerboxtooltip.api.provider.PreviewProviderRegistry;
@@ -24,4 +23,3 @@ public class ToolPouchTooltipCompat implements ShulkerBoxTooltipApi {
         registry.register(ToolPouch.id("tool_pouch_tooltip"), new ToolPouchPreviewProvider(), items);
     }
 }
-*/

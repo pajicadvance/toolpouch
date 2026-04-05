@@ -1,2 +1,3 @@
-- Fixed custom recipes from the mod causing a crash when they get serialized.
-- Relaxed MC version requirement so that I don't have to upload a new file every time MC gets a hotfix. No functional changes to the mod.
+- Re-enabled compatibility for Shulker Box Tooltip, Raised, and Spyglass Astronomy.
+- Fixed minimap overlay being displayed over the debug screen.
+- Changed the default minimap overlay position to Top Left.

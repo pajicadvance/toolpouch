@@ -1,5 +1,4 @@
 package me.pajic.toolpouch.mixin.client.compat;
-/*
 
 //? if fabric {
 
@@ -47,4 +46,3 @@ public class SpyglassAstronomyClientMixin {
 	}
 }
 //?}
-*/

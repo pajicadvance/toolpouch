@@ -70,4 +70,7 @@ dependencies {
 	implementation("me.fzzyhmstrs:fzzy_config:${prop("deps.fzzy_config")}")
 	compileOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:${prop("deps.ldl")}")
 	compileOnly("com.github.pajicadvance:aileron:1.2.1")
+	compileOnly("maven.modrinth:raised:${prop("deps.raised")}")
+	compileOnly("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-fabric")
+	compileOnly(rootProject.files("ext/spyglass_astronomy-1.0.20-mc26.1.1.jar"))
 }

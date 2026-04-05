@@ -1,6 +1,5 @@
 package me.pajic.toolpouch.hud;
 
-/*
 import dev.yurisuika.raised.api.RaisedApi;
 import dev.yurisuika.raised.registry.LayerRegistry;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
@@ -13,4 +12,3 @@ public class RaisedCompat {
         );
     }
 }
-*/

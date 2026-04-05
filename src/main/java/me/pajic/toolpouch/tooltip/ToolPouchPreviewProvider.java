@@ -1,6 +1,5 @@
 package me.pajic.toolpouch.tooltip;
 
-/*
 import com.misterpemodder.shulkerboxtooltip.api.PreviewContext;
 import com.misterpemodder.shulkerboxtooltip.api.color.ColorKey;
 import com.misterpemodder.shulkerboxtooltip.api.provider.PreviewProvider;
@@ -23,7 +22,7 @@ public class ToolPouchPreviewProvider implements PreviewProvider {
     @Override
     public List<ItemStack> getInventory(@NotNull PreviewContext context) {
         ItemContainerContents contents = context.stack().getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
-        return contents.stream().toList();
+        return contents.allItemsCopyStream().toList();
     }
 
     @Override
@@ -41,4 +40,3 @@ public class ToolPouchPreviewProvider implements PreviewProvider {
         return ColorKey.ofRgb(DyedItemColor.getOrDefault(context.stack(), -6265536));
     }
 }
-*/

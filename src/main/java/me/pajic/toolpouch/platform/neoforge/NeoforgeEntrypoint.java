@@ -10,6 +10,8 @@ import me.pajic.toolpouch.network.ModPayloads;
 import me.pajic.toolpouch.network.NetworkClientEvents;
 import me.pajic.toolpouch.network.NetworkEvents;
 import me.pajic.toolpouch.recipe.ModRecipes;
+import me.pajic.toolpouch.tooltip.PreviewExtensionPoint;
+import me.pajic.toolpouch.util.CompatFlags;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTab;
@@ -57,9 +59,9 @@ public class NeoforgeEntrypoint {
 	}
 
 	@SubscribeEvent
-	private static void initCauldronInteractionAndTooltip(FMLCommonSetupEvent event) {
+	private static void onCommonSetup(FMLCommonSetupEvent event) {
 		ToolPouch.onInitialize();
-		//if (CompatFlags.SBT_LOADED) PreviewExtensionPoint.register();
+		if (CompatFlags.SBT_LOADED) PreviewExtensionPoint.register();
 	}
 
 	@SubscribeEvent
