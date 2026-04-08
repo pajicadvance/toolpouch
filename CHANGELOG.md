@@ -1,3 +1,2 @@
-- Re-enabled compatibility for Shulker Box Tooltip, Raised, and Spyglass Astronomy.
-- Fixed minimap overlay being displayed over the debug screen.
-- Changed the default minimap overlay position to Top Left.
+- Added support for Trinkets Updated. Tool pouches can now be equipped in the Belt slot when it's installed.
+- Added compatibility for Locator Lodestones. Lodestone compasses stored in the tool pouch will now show up on the locator bar.

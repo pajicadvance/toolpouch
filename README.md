@@ -98,6 +98,11 @@ Additionally, the crossbow can use the fireworks from the pouch as ammo, by sele
 
 By default, there is no limit on how many fireworks can be stored inside the Tool Pouch.
 
+## Mod Compatibility
+
+- [Trinkets (Updated)](https://modrinth.com/mod/trinkets-updated): Allows equipping the tool pouch as a trinket and opening it by pressing a keybind (default H).
+- [Locator Lodestones](https://modrinth.com/mod/locator_lodestones): Lodestone compasses stored in the tool pouch will show up on the locator bar.
+
 ## FAQ
 
 ### Can you add support for x item from x mod?
