@@ -72,5 +72,6 @@ dependencies {
 	compileOnly("com.github.pajicadvance:aileron:1.2.1")
 	compileOnly("maven.modrinth:raised:${prop("deps.raised")}")
 	compileOnly("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-fabric")
+	compileOnly("maven.modrinth:locator_lodestones:${prop("deps.locastones")}")
 	compileOnly(rootProject.files("ext/spyglass_astronomy-1.0.20-mc26.1.1.jar"))
 }

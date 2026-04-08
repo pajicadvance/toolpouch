@@ -20,6 +20,7 @@ description = '''${description}'''
 "lambdynlights:initializer" = "${group}.${id}.renderer.PlayerLanternDynamicLighting"
 [[mixins]]
 config = "${id}.mixins.json"
+behaviorVersion = "0.17.0"
 [[accessTransformers]]
 file = "aw/${minecraft}.cfg"
 ${dependencies}
