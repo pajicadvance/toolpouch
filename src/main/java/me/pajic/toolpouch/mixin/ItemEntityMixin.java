@@ -27,7 +27,7 @@ public abstract class ItemEntityMixin extends Entity {
     }
 
     @Shadow public abstract ItemStack getItem();
-    @Shadow public abstract void setItem(ItemStack stack);
+    @Shadow public abstract void setItem(ItemStack itemStack);
 
     @WrapOperation(
             method = "playerTouch",
@@ -37,7 +37,10 @@ public abstract class ItemEntityMixin extends Entity {
             )
     )
     private boolean addAmmoToToolPouch(
-            Inventory instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) Player player
+            Inventory instance,
+			ItemStack itemStack,
+			Operation<Boolean> original,
+			@Local(argsOnly = true, name = "player") Player player
     ) {
 		Predicate<ItemStack> ammo = GameplayUtil.getSupportedAmmo(player);
         if (ammo.test(itemStack)) {

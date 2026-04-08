@@ -39,10 +39,10 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
 	)
 	private void handleToolPouchUpgrade(
 			CallbackInfo ci,
-			@Local(argsOnly = true) RecipeHolder<SmithingRecipe> recipeHolder,
+			@Local(argsOnly = true, name = "recipe") RecipeHolder<SmithingRecipe> recipe,
 			@Local(name = "result") ItemStack result
 	) {
-		if (recipeHolder.id().identifier().equals(ToolPouch.id("netherite_tool_pouch_smithing"))) {
+		if (recipe.id().identifier().equals(ToolPouch.id("netherite_tool_pouch_smithing"))) {
 			ItemStack input = slots.get(1).getItem();
 			result.set(
 					DataComponents.CONTAINER,

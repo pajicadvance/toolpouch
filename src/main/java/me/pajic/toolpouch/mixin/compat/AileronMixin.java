@@ -19,7 +19,10 @@ public class AileronMixin {
             method = "getElytra",
             at = @At("RETURN")
     )
-    private static ItemStack useToolPouchElytra(ItemStack original, @Local(argsOnly = true) LivingEntity entity) {
+    private static ItemStack useToolPouchElytra(
+			ItemStack original,
+			@Local(argsOnly = true, name = "entity") LivingEntity entity
+	) {
 		if (entity instanceof Player player) {
 			ItemStack elytra = ToolPouchUtil.getElytraFromToolPouch(player, false);
 			if (!elytra.isEmpty()) return elytra;

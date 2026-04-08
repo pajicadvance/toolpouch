@@ -60,6 +60,7 @@ repositories {
 	strictMaven("https://jitpack.io") { name = "Jitpack" }
 	strictMaven("https://maven.gegy.dev") { name = "Gegy" }
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	maven("https://maven.nucleoid.xyz/releases") { name = "Nucleoid" }
 }
 
 dependencies {
@@ -70,6 +71,7 @@ dependencies {
 	compileOnly("com.github.pajicadvance:aileron:1.2.1")
 	compileOnly("maven.modrinth:raised:${prop("deps.raised")}")
 	compileOnly("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-neoforge")
+	compileOnlyApi("eu.pb4:trinkets:${prop("deps.trinkets")}")
 }
 
 tasks.named("createMinecraftArtifacts") {

@@ -24,9 +24,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
+@SuppressWarnings("NullableProblems")
 @MixinEnvironment(type = MixinEnvironment.Env.CLIENT)
 @Mixin(AvatarRenderer.class)
-public abstract class AvatarRendererMixin<AvatarlikeEntity extends Avatar & ClientAvatarEntity> extends LivingEntityRenderer<AvatarlikeEntity, AvatarRenderState, PlayerModel> {
+public abstract class AvatarRendererMixin<T1 extends Avatar & ClientAvatarEntity> extends LivingEntityRenderer<T1, AvatarRenderState, PlayerModel> {
 
 	@Unique private static BlockModelResolver blockModelResolver;
 
@@ -46,16 +47,16 @@ public abstract class AvatarRendererMixin<AvatarlikeEntity extends Avatar & Clie
 			method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V",
 			at = @At("HEAD")
 	)
-	private <AvatarlikeEntity extends Avatar & ClientAvatarEntity> void extendRenderState(
-			AvatarlikeEntity avatar, AvatarRenderState avatarRenderState, float f, CallbackInfo ci
+	private <T2 extends Avatar & ClientAvatarEntity> void extendRenderState(
+			T2 entity, AvatarRenderState state, float partialTicks, CallbackInfo ci
 	) {
-		if (avatar instanceof Player player) {
+		if (entity instanceof Player player) {
 			List<ItemStack> lanterns = ToolPouchUtil.getItemsFromToolPouch(
 					player, stack -> stack.is(ItemTags.LANTERNS)
 			);
 			ItemStack lantern = lanterns.isEmpty() ? ItemStack.EMPTY : lanterns.getFirst();
 			blockModelResolver.update(
-					((AvatarRenderStateExtension) avatarRenderState).toolpouch$getLantern(),
+					((AvatarRenderStateExtension) state).toolpouch$getLantern(),
 					Block.byItem(lantern.getItem()).defaultBlockState(),
 					BlockDisplayContext.create()
 			);

@@ -5,6 +5,7 @@ import me.pajic.toolpouch.menu.ShulkerBoxContainerMenu;
 import me.pajic.toolpouch.util.GameplayUtil;
 import me.pajic.toolpouch.util.PlayerExtension;
 import me.pajic.toolpouch.util.ToolPouchUtil;
+import me.pajic.toolpouch.util.TrinketsCompat;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -22,11 +23,15 @@ import java.util.List;
 
 public class NetworkEvents {
 
-	public static void tryOpenToolPouch(ServerPlayer player, boolean fromLeggingsSlot) {
-		ItemStack toolPouch = fromLeggingsSlot ? player.getItemBySlot(EquipmentSlot.LEGS) :
-				player.getInventory().getNonEquipmentItems().stream()
-				.filter(stack -> stack.is(GameplayUtil.TOOL_POUCHES))
-				.findFirst().orElse(ItemStack.EMPTY);
+	public static void tryOpenToolPouch(ServerPlayer player, int openMethod) {
+		ItemStack toolPouch = switch (openMethod) {
+			case 0 -> player.getInventory().getNonEquipmentItems().stream()
+					.filter(stack -> stack.is(GameplayUtil.TOOL_POUCHES))
+					.findFirst().orElse(ItemStack.EMPTY);
+			case 1 -> player.getItemBySlot(EquipmentSlot.LEGS);
+			case 2 -> TrinketsCompat.tryGetTrinketToolPouch(player);
+			default -> ItemStack.EMPTY;
+		};
 		if (!toolPouch.isEmpty()) ToolPouch.xplat().openToolPouchScreen(player, toolPouch);
 	}
 

@@ -25,7 +25,7 @@ public class DebugScreenOverlayMixin {
             method = "extractLines",
             at = @At("HEAD")
     )
-    private void filterLines(GuiGraphicsExtractor guiGraphics, List<String> lines, boolean leftSide, CallbackInfo ci) {
+    private void filterLines(GuiGraphicsExtractor graphics, List<String> lines, boolean alignLeft, CallbackInfo ci) {
         if (ToolPouch.CONFIG.hideDebugInfoInSurvival.get() && minecraft.showOnlyReducedInfo()) {
             lines.removeIf(text -> !Strings.isNullOrEmpty(text) && text.startsWith("Section-relative: "));
             lines.removeIf(text -> !Strings.isNullOrEmpty(text) && text.startsWith("hunger: "));

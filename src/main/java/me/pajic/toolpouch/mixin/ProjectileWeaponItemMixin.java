@@ -25,8 +25,8 @@ public class ProjectileWeaponItemMixin {
             method = "getHeldProjectile",
             at = @At(value = "RETURN")
     )
-    private static ItemStack getAmmoFromToolPouch(ItemStack original, @Local(argsOnly = true) LivingEntity shooter) {
-        if (shooter instanceof Player player && original.isEmpty()) {
+    private static ItemStack getAmmoFromToolPouch(ItemStack original, @Local(argsOnly = true, name = "entity") LivingEntity entity) {
+        if (entity instanceof Player player && original.isEmpty()) {
 			int slot = ((PlayerExtension) player).toolpouch$getArrowSlot();
 			List<ItemStack> ammo = ToolPouchUtil.getItemsFromToolPouch(player, GameplayUtil.getSupportedAmmo(player));
 			if (!ammo.isEmpty()) return ammo.get(slot);
@@ -38,22 +38,22 @@ public class ProjectileWeaponItemMixin {
 	@WrapMethod(method = "useAmmo")
     private static ItemStack useAmmoFromToolPouch(
             ItemStack weapon,
-            ItemStack originalAmmo,
-            LivingEntity shooter,
-            boolean intangible,
+            ItemStack projectile,
+            LivingEntity holder,
+            boolean forceInfinite,
             Operation<ItemStack> original
     ) {
-		if (shooter instanceof Player player) {
-			int i = !intangible && !player.hasInfiniteMaterials() && player.level() instanceof ServerLevel serverLevel ?
-					EnchantmentHelper.processAmmoUse(serverLevel, weapon, originalAmmo, 1) : 0;
+		if (holder instanceof Player player) {
+			int i = !forceInfinite && !player.hasInfiniteMaterials() && player.level() instanceof ServerLevel serverLevel ?
+					EnchantmentHelper.processAmmoUse(serverLevel, weapon, projectile, 1) : 0;
 			int slot = ((PlayerExtension) player).toolpouch$getArrowSlot();
 			List<ItemStack> ammo = ToolPouchUtil.getItemsFromToolPouch(player, GameplayUtil.getSupportedAmmo(player));
 			if (!ammo.isEmpty()) {
 				ItemStack arrow = ammo.get(slot);
 				ToolPouchUtil.removeItemFromToolPouch(player, arrow, i);
-				return original.call(weapon, ammo.get(slot), player, intangible);
+				return original.call(weapon, ammo.get(slot), player, forceInfinite);
 			}
 		}
-        return original.call(weapon, originalAmmo, shooter, intangible);
+        return original.call(weapon, projectile, holder, forceInfinite);
     }
 }

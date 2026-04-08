@@ -21,18 +21,24 @@ import java.util.function.Consumer;
 public class ItemContainerContentsMixin {
 
 	@WrapMethod(method = "addToTooltip")
-	private void addAttachedToolPouchToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter, Operation<Void> original) {
+	private void addAttachedToolPouchToTooltip(
+			Item.TooltipContext context,
+			Consumer<Component> consumer,
+			TooltipFlag flag,
+			DataComponentGetter components,
+			Operation<Void> original
+	) {
 		if (ToolPouch.CONFIG.canAttachToLeggings.get()) {
-			Equippable equippable = componentGetter.get(DataComponents.EQUIPPABLE);
-			DyedItemColor storedDye = componentGetter.get(ModDataComponents.STORED_TOOL_POUCH_DYE);
+			Equippable equippable = components.get(DataComponents.EQUIPPABLE);
+			DyedItemColor storedDye = components.get(ModDataComponents.STORED_TOOL_POUCH_DYE);
 			if (equippable != null && equippable.slot() == EquipmentSlot.LEGS) {
-				tooltipAdder.accept(
+				consumer.accept(
 					Component.translatable("text.toolpouch.attachment").withColor(
 							storedDye != null ? storedDye.rgb() : -6265536
 					)
 				);
 			}
 		}
-		original.call(context, tooltipAdder, flag, componentGetter);
+		original.call(context, consumer, flag, components);
 	}
 }

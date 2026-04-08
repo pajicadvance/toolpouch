@@ -23,8 +23,11 @@ public class WingsLayerMixin {
 					opcode = Opcodes.GETFIELD
 			)
 	)
-	private ItemStack renderToolPouchElytra(ItemStack original, @Local(argsOnly = true) HumanoidRenderState renderState) {
-		ItemStack toolPouchElytra = ((HumanoidRenderStateExtension) renderState).toolpouch$getElytra();
+	private ItemStack renderToolPouchElytra(
+			ItemStack original,
+			@Local(argsOnly = true, name = "state") HumanoidRenderState state
+	) {
+		ItemStack toolPouchElytra = ((HumanoidRenderStateExtension) state).toolpouch$getElytra();
 		if (!toolPouchElytra.isEmpty()) return toolPouchElytra;
 		return original;
 	}

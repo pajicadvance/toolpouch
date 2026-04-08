@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.GameType;
 
 import java.util.function.Predicate;
 
@@ -37,5 +39,13 @@ public class GameplayUtil {
 		if (mainHand instanceof ProjectileWeaponItem pwi) return pwi.getSupportedHeldProjectiles();
 		if (offHand instanceof ProjectileWeaponItem pwi) return pwi.getSupportedHeldProjectiles();
 		return _ -> false;
+	}
+
+	public static boolean canUnequipToolPouch(Player player, ItemStack backpack) {
+		GameType mode = player.gameMode();
+		if (mode != null && mode.isSurvival() && ToolPouch.CONFIG.preventUnequipWhenNotEmpty.get() && isValidContainerHolder(backpack)) {
+			return backpack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY) == ItemContainerContents.EMPTY;
+		}
+		return true;
 	}
 }

@@ -22,10 +22,16 @@ public class HumanoidMobRendererMixin {
 			method = "extractHumanoidRenderState",
 			at = @At("TAIL")
 	)
-	private static void extractToolPouchElytra(LivingEntity entity, HumanoidRenderState reusedState, float partialTick, ItemModelResolver itemModelResolver, CallbackInfo ci) {
+	private static void extractToolPouchElytra(
+			LivingEntity entity,
+			HumanoidRenderState state,
+			float partialTicks,
+			ItemModelResolver itemModelResolver,
+			CallbackInfo ci
+	) {
 		if (entity instanceof Player player) {
 			ItemStack elytra = ToolPouchUtil.getElytraFromToolPouch(player, true);
-			if (!elytra.isEmpty()) ((HumanoidRenderStateExtension) reusedState).toolpouch$setElytra(elytra);
+			if (!elytra.isEmpty()) ((HumanoidRenderStateExtension) state).toolpouch$setElytra(elytra);
 		}
 	}
 }

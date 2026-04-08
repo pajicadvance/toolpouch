@@ -25,21 +25,21 @@ import java.util.List;
 public abstract class MapItemMixin {
 
 	@Shadow
-	public abstract void update(Level level, Entity viewer, MapItemSavedData data);
+	public abstract void update(Level level, Entity player, MapItemSavedData data);
 
 	@SuppressWarnings("DataFlowIssue")
 	@Inject(
 			method = "inventoryTick",
 			at = @At("TAIL")
 	)
-	private void updateMapsInToolPouch(ItemStack s, ServerLevel level, Entity entity, EquipmentSlot slot, CallbackInfo ci) {
-		if (entity instanceof Player player) {
+	private void updateMapsInToolPouch(ItemStack itemStack, ServerLevel level, Entity owner, EquipmentSlot slot, CallbackInfo ci) {
+		if (owner instanceof Player player) {
 			List<ItemStack> maps = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.has(DataComponents.MAP_ID));
 			if (!maps.isEmpty()) {
 				ItemStack map = maps.getFirst();
 				MapId mapId = map.get(DataComponents.MAP_ID);
 				MapItemSavedData mapData = MapItem.getSavedData(map.get(DataComponents.MAP_ID), level);
-				update(level, entity, mapData);
+				update(level, owner, mapData);
 				if (player instanceof ServerPlayer serverPlayer) {
 					Packet<?> packet = mapData.getUpdatePacket(mapId, serverPlayer);
 					if (packet != null) serverPlayer.connection.send(packet);

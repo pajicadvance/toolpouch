@@ -1,18 +1,23 @@
 package me.pajic.toolpouch.item;
 
 import me.pajic.toolpouch.ToolPouch;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
-public class ToolPouchItem extends BaseToolPouchItem {
+public class ToolPouchItem extends Item {
 
-	public ToolPouchItem() {
-		super(new Properties()
-				.stacksTo(1)
-				.component(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
-				.setId(ResourceKey.create(Registries.ITEM, ToolPouch.id("tool_pouch")))
-		);
+	public ToolPouchItem(Properties properties) {
+		super(properties);
+	}
+
+	@Override
+	public @NotNull InteractionResult use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+		return ToolPouch.CONFIG.canOpenWithRightClick.get() ?
+				ToolPouch.xplat().openToolPouchScreen(player, player.getItemInHand(hand)) :
+				super.use(level, player, hand);
 	}
 }

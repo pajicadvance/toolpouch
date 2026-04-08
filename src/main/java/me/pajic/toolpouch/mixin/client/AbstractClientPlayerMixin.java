@@ -13,13 +13,16 @@ import org.spongepowered.asm.mixin.Mixin;
 public class AbstractClientPlayerMixin {
 
     @WrapMethod(method = "getFieldOfViewModifier")
-    private float modifyFOV(boolean isFirstPerson, float fovEffectScale, Operation<Float> original) {
+    private float modifyFOV(boolean firstPerson, float effectScale, Operation<Float> original) {
         if (ClientUtil.shouldScope) {
             return 0.1F * ClientUtil.zoomModifier;
         }
-        else if (ClientUtil.zoomModifier != 1.0F && (!ToolPouchClient.CONFIG.rememberZoomLevel.get() || !ToolPouchClient.CONFIG.scrollableZoom.get())) {
+        else if (
+				ClientUtil.zoomModifier != 1.0F &&
+				(!ToolPouchClient.CONFIG.rememberZoomLevel.get() || !ToolPouchClient.CONFIG.scrollableZoom.get())
+		) {
 			ClientUtil.zoomModifier = 1.0F;
         }
-        return original.call(isFirstPerson, fovEffectScale);
+        return original.call(firstPerson, effectScale);
     }
 }

@@ -30,7 +30,7 @@ public abstract class LivingEntityMixin extends Entity {
 		super(entityType, level);
 	}
 
-	@Shadow protected abstract void updateUsingItem(ItemStack usingItem);
+	@Shadow protected abstract void updateUsingItem(ItemStack useItem);
 
     @WrapMethod(method = "updatingUsingItem")
     private void useSpyglassFromToolPouch(Operation<Void> original) {
@@ -49,7 +49,10 @@ public abstract class LivingEntityMixin extends Entity {
 			cancellable = true
 	)
 	private void useElytraFromToolPouch(CallbackInfo ci) {
-		if ((LivingEntity) (Object) this instanceof Player player && ToolPouchUtil.toolPouchHasItem(player, stack -> stack.has(DataComponents.GLIDER))) {
+		if (
+				(LivingEntity) (Object) this instanceof Player player &&
+				ToolPouchUtil.toolPouchHasItem(player, stack -> stack.has(DataComponents.GLIDER))
+		) {
 			ToolPouchUtil.updateElytraInToolPouch(player);
 			gameEvent(GameEvent.ELYTRA_GLIDE);
 			ci.cancel();
@@ -80,7 +83,9 @@ public abstract class LivingEntityMixin extends Entity {
 	)
 	private ItemStack useTotemFromToolPouch(ItemStack original) {
 		if ((LivingEntity) (Object) this instanceof Player player) {
-			List<ItemStack> totems = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.has(DataComponents.DEATH_PROTECTION));
+			List<ItemStack> totems = ToolPouchUtil.getItemsFromToolPouch(player, stack ->
+					stack.has(DataComponents.DEATH_PROTECTION)
+			);
 			if (!totems.isEmpty()) {
 				ItemStack totem = totems.getFirst();
 				ToolPouchUtil.removeItemFromToolPouch(player, totem, 1);

@@ -89,7 +89,7 @@ public class FabricEntrypoint implements ModInitializer {
 		PayloadTypeRegistry.serverboundPlay().register(ModPayloads.C2SElytraBoostFromPouchPayload.TYPE, ModPayloads.C2SElytraBoostFromPouchPayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(
 				ModPayloads.C2SOpenToolPouchPayload.TYPE,
-				(payload, context) -> NetworkEvents.tryOpenToolPouch(context.player(), payload.fromLeggingsSlot())
+				(payload, context) -> NetworkEvents.tryOpenToolPouch(context.player(), payload.openMethod())
 		);
 		ServerPlayNetworking.registerGlobalReceiver(
 				ModPayloads.C2SOpenShulkerBoxPayload.TYPE,

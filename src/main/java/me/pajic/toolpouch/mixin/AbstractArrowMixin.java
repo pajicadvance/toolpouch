@@ -29,7 +29,10 @@ public abstract class AbstractArrowMixin extends Projectile {
             )
     )
     private boolean addArrowToToolPouch(
-            Inventory instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) Player player
+            Inventory instance,
+			ItemStack itemStack,
+			Operation<Boolean> original,
+			@Local(argsOnly = true, name = "player") Player player
     ) {
         if (itemStack.is(ItemTags.ARROWS)) {
 			if (ToolPouchUtil.toolPouchHasItem(player, stack -> stack.is(ItemTags.ARROWS))) {

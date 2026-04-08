@@ -58,6 +58,7 @@ repositories {
 	strictMaven("https://jitpack.io") { name = "Jitpack" }
 	strictMaven("https://maven.gegy.dev") { name = "Gegy" }
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	maven("https://maven.nucleoid.xyz/releases") { name = "Nucleoid" }
 }
 
 dependencies {
@@ -74,4 +75,6 @@ dependencies {
 	compileOnly("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-fabric")
 	compileOnly("maven.modrinth:locator_lodestones:${prop("deps.locastones")}")
 	compileOnly(rootProject.files("ext/spyglass_astronomy-1.0.20-mc26.1.1.jar"))
+	compileOnlyApi("eu.pb4:trinkets:${prop("deps.trinkets")}")
+	runtimeOnly("eu.pb4:trinkets:${prop("deps.trinkets")}")
 }

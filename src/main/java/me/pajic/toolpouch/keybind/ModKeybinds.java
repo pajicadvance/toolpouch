@@ -7,8 +7,10 @@ import me.pajic.toolpouch.hud.ContextualSelectionWidget;
 import me.pajic.toolpouch.hud.MinimapOverlay;
 import me.pajic.toolpouch.network.ModPayloads;
 import me.pajic.toolpouch.util.ClientUtil;
+import me.pajic.toolpouch.util.CompatFlags;
 import me.pajic.toolpouch.util.GameplayUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
+import me.pajic.toolpouch.util.TrinketsCompat;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -101,12 +103,17 @@ public class ModKeybinds {
 				}
 			}
 			if (OPEN_TOOL_POUCH.consumeClick()) {
-				ItemStack legsItem = player.getItemBySlot(EquipmentSlot.LEGS);
-				if (GameplayUtil.isValidContainerHolder(legsItem)) {
-					ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(true));
-				} else if (ToolPouch.CONFIG.canOpenFromInventory.get()) {
-					if (player.getInventory().getNonEquipmentItems().stream().anyMatch(stack -> stack.is(GameplayUtil.TOOL_POUCHES))) {
-						ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(false));
+				ItemStack legsItem = ItemStack.EMPTY;
+				if (CompatFlags.TRINKETS_LOADED) legsItem = TrinketsCompat.tryGetTrinketToolPouch(player);
+				if (!legsItem.isEmpty()) ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(2));
+				else {
+					legsItem = player.getItemBySlot(EquipmentSlot.LEGS);
+					if (GameplayUtil.isValidContainerHolder(legsItem)) {
+						ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(1));
+					} else if (ToolPouch.CONFIG.canOpenFromInventory.get()) {
+						if (player.getInventory().getNonEquipmentItems().stream().anyMatch(stack -> stack.is(GameplayUtil.TOOL_POUCHES))) {
+							ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(0));
+						}
 					}
 				}
 			}

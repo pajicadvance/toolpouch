@@ -21,7 +21,11 @@ public class MapItemSavedDataMixin {
 					target = "Lnet/minecraft/world/entity/player/Inventory;contains(Ljava/util/function/Predicate;)Z"
 			)
 	)
-	private boolean checkToolPouchForMaps(boolean original, @Local(argsOnly = true) Player player, @Local(name = "mapMatcher") Predicate<ItemStack> mapMatcher) {
-		return original || ToolPouchUtil.toolPouchHasItem(player, mapMatcher);
+	private boolean checkToolPouchForMaps(
+			boolean original,
+			@Local(argsOnly = true, name = "tickingPlayer") Player tickingPlayer,
+			@Local(name = "mapMatcher") Predicate<ItemStack> mapMatcher
+	) {
+		return original || ToolPouchUtil.toolPouchHasItem(tickingPlayer, mapMatcher);
 	}
 }

@@ -88,7 +88,7 @@ public class NeoforgeEntrypoint {
 				ModPayloads.C2SOpenToolPouchPayload.TYPE,
 				ModPayloads.C2SOpenToolPouchPayload.CODEC,
 				(payload, context) ->
-						NetworkEvents.tryOpenToolPouch((ServerPlayer) context.player(), payload.fromLeggingsSlot())
+						NetworkEvents.tryOpenToolPouch((ServerPlayer) context.player(), payload.openMethod())
 		);
 		registrar.playToServer(
 				ModPayloads.C2SOpenShulkerBoxPayload.TYPE,

@@ -9,10 +9,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class ModPayloads {
 
-	public record C2SOpenToolPouchPayload(boolean fromLeggingsSlot) implements CustomPacketPayload {
+	public record C2SOpenToolPouchPayload(int openMethod) implements CustomPacketPayload {
 		public static final Type<C2SOpenToolPouchPayload> TYPE = new Type<>(NetworkConstants.OPEN_TOOL_POUCH);
 		public static final StreamCodec<RegistryFriendlyByteBuf, C2SOpenToolPouchPayload> CODEC = StreamCodec.composite(
-				ByteBufCodecs.BOOL, C2SOpenToolPouchPayload::fromLeggingsSlot,
+				ByteBufCodecs.INT, C2SOpenToolPouchPayload::openMethod,
 				C2SOpenToolPouchPayload::new
 		);
 

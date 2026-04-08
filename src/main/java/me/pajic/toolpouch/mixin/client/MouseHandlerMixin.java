@@ -21,7 +21,7 @@ public class MouseHandlerMixin {
 					target = "Lnet/minecraft/world/entity/player/Inventory;setSelectedSlot(I)V"
             )
     )
-    private void redirectScroll(Inventory instance, int selectedHotbarSlot, Operation<Void> original, @Local(name = "wheel") int wheel) {
-        if (ScrollHandler.handleMouseScroll(instance, (int) Math.signum(wheel))) original.call(instance, selectedHotbarSlot);
+    private void redirectScroll(Inventory instance, int selected, Operation<Void> original, @Local(name = "wheel") int wheel) {
+        if (ScrollHandler.handleMouseScroll(instance, (int) Math.signum(wheel))) original.call(instance, selected);
     }
 }
