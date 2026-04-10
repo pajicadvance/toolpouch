@@ -25,16 +25,9 @@ public final class PlayerLanternLuminance implements EntityLuminance {
 
 	@Override
 	public @Range(from = 0L, to = 15L) int getLuminance(ItemLightSourceManager manager, Entity entity) {
-		if (entity instanceof Player player && !player.isInLiquid()) {
+		if (entity instanceof Player player) {
 			List<ItemStack> lanterns = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ItemTags.LANTERNS));
-			if (!lanterns.isEmpty()) {
-				int maxLuminance = 0;
-				for (ItemStack lantern : lanterns) {
-					int luminance = manager.getLuminance(lantern);
-					if (luminance > maxLuminance) maxLuminance = luminance;
-				}
-				return maxLuminance;
-			}
+			if (!lanterns.isEmpty()) return manager.getLuminance(lanterns.getFirst());
 		}
 		return 0;
 	}
