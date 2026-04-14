@@ -1,11 +1,14 @@
 package me.pajic.toolpouch.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
+import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.component.ModDataComponents;
 import me.pajic.toolpouch.item.ModItems;
 import me.pajic.toolpouch.util.GameplayUtil;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,10 +20,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 //? neoforge
 //import net.minecraft.world.entity.LivingEntity;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
@@ -69,6 +74,27 @@ public abstract class ItemStackMixin {
 			DyedItemColor dye = savedStack.get(ModDataComponents.STORED_TOOL_POUCH_DYE);
 			if (dye != null) toolPouch.set(DataComponents.DYED_COLOR, dye);
 			/*? fabric {*/player/*?} else {*//*if (player instanceof ServerPlayer sp) sp*//*?}*/.addItem(toolPouch);
+		}
+	}
+
+	@Inject(
+			method = "getTooltipLines",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/world/item/ItemStack;addDetailsToTooltip(Lnet/minecraft/world/item/Item$TooltipContext;Lnet/minecraft/world/item/component/TooltipDisplay;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;Ljava/util/function/Consumer;)V"
+			)
+	)
+	private void showExactItemCountIfLarge(
+			CallbackInfoReturnable<List<Component>> cir,
+			@Local(name = "lines") List<Component> lines
+	) {
+		ItemStack stack = (ItemStack) (Object) this;
+		if (
+				ToolPouch.CONFIG.equippableItemTooltip.get() &&
+				ToolPouch.CONFIG.allowedItems.stream().anyMatch(allowedItem ->
+						GameplayUtil.itemMatches(stack, allowedItem.id.get()).rightBoolean())
+		) {
+			lines.add(Component.translatable("text.toolpouch.equippable"));
 		}
 	}
 }

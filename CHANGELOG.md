@@ -1,2 +1,1 @@
-- Added recipe unlock conditions.
-- Allow detaching tool pouches from leggings when "Allow attaching to leggings" is off.
+- Items which can be stored inside the Tool Pouch will now indicate that in their tooltip. This can be disabled in the mod configuration.

@@ -3,9 +3,7 @@ package me.pajic.toolpouch.menu;
 import it.unimi.dsi.fastutil.objects.ObjectBooleanImmutablePair;
 import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.util.AllowedItem;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
+import me.pajic.toolpouch.util.GameplayUtil;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
@@ -34,7 +32,7 @@ public class ToolPouchSlot extends Slot {
 	public int getMaxStackSize(@NonNull ItemStack stack) {
 		if (isPlayerInventory) return super.getMaxStackSize(stack);
 		Optional<AllowedItem> allowedItem = ToolPouch.CONFIG.allowedItems.stream().filter(ai ->
-				itemMatches(stack, ai.id.get()).rightBoolean()
+				GameplayUtil.itemMatches(stack, ai.id.get()).rightBoolean()
 		).findFirst();
 		if (allowedItem.isPresent()) {
 			int s = allowedItem.get().maxStackSize.get();
@@ -48,20 +46,8 @@ public class ToolPouchSlot extends Slot {
 	}
 
 	private boolean stackAllowed(ItemStack stack, AllowedItem allowedItem) {
-		ObjectBooleanImmutablePair<Optional<TagKey<Item>>> pair = itemMatches(stack, allowedItem.id.get());
+		ObjectBooleanImmutablePair<Optional<TagKey<Item>>> pair = GameplayUtil.itemMatches(stack, allowedItem.id.get());
 		return pair.rightBoolean() && stackCountCheck(stack, allowedItem.maxStackCount.get(), pair.left());
-	}
-
-	private ObjectBooleanImmutablePair<Optional<TagKey<Item>>> itemMatches(ItemStack stack, String s) {
-		if (s.startsWith("#")) {
-			Identifier tagId = Identifier.tryParse(s.substring(1));
-			if (tagId != null) {
-				TagKey<Item> tag = TagKey.create(Registries.ITEM, tagId);
-				return new ObjectBooleanImmutablePair<>(Optional.of(tag), stack.is(tag));
-			}
-			return new ObjectBooleanImmutablePair<>(Optional.empty(), false);
-		}
-		else return new ObjectBooleanImmutablePair<>(Optional.empty(), stack.is(BuiltInRegistries.ITEM.getValue(Identifier.tryParse(s))));
 	}
 
 	@SuppressWarnings("OptionalUsedAsFieldOrParameterType")

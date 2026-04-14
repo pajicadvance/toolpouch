@@ -1,8 +1,11 @@
 package me.pajic.toolpouch.util;
 
+import it.unimi.dsi.fastutil.objects.ObjectBooleanImmutablePair;
 import me.pajic.toolpouch.ToolPouch;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
@@ -12,6 +15,7 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.GameType;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class GameplayUtil {
@@ -45,5 +49,17 @@ public class GameplayUtil {
 			return backpack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY) == ItemContainerContents.EMPTY;
 		}
 		return true;
+	}
+
+	public static ObjectBooleanImmutablePair<Optional<TagKey<Item>>> itemMatches(ItemStack stack, String s) {
+		if (s.startsWith("#")) {
+			Identifier tagId = Identifier.tryParse(s.substring(1));
+			if (tagId != null) {
+				TagKey<Item> tag = TagKey.create(Registries.ITEM, tagId);
+				return new ObjectBooleanImmutablePair<>(Optional.of(tag), stack.is(tag));
+			}
+			return new ObjectBooleanImmutablePair<>(Optional.empty(), false);
+		}
+		else return new ObjectBooleanImmutablePair<>(Optional.empty(), stack.is(BuiltInRegistries.ITEM.getValue(Identifier.tryParse(s))));
 	}
 }

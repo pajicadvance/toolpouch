@@ -13,6 +13,8 @@
   "toolpouch.config.canAttachToLeggings": "Allow attaching to leggings",
   "toolpouch.config.canAttachToLeggings.desc": "Allows crafting leggings with pouches attached to them by combining any leggings with any pouch in the crafting menu. The leggings can then be equipped normally and the attached pouch can be opened with the \"Open Tool Pouch\" keybind. The pouch can be detached from the leggings in the crafting menu.",
   "toolpouch.config.preventUnequipWhenNotEmpty": "Prevent unequip when not empty",
+  "toolpouch.config.equippableItemTooltip": "Equippable tooltip",
+  "toolpouch.config.equippableItemTooltip.desc": "Adds text to the item tooltip that indicates the item can be placed inside the Tool Pouch.",
   "toolpouch.config.allowedItems": "Allowed items",
   "toolpouch.config.allowedItem.id": "Identifier",
   "toolpouch.config.allowedItem.id.desc": "Can be an item tag (starts with #) or a single item.",
@@ -118,6 +120,7 @@
 
   "text.toolpouch.attachment": "Tool Pouch attached",
   "text.toolpouch.tag": "Tag: %s",
+  "text.toolpouch.equippable": "Equippable in Tool Pouch",
 
   "key.category.toolpouch.keys": "Tool Pouch",
   "key.toolpouch.open_tool_pouch": "Open Tool Pouch",

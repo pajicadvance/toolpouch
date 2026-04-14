@@ -51,6 +51,7 @@ public class ModConfig extends Config {
 	public ValidatedBoolean canOpenWithRightClick = new ValidatedBoolean(true);
 	public ValidatedBoolean canAttachToLeggings = new ValidatedBoolean(true);
 	public ValidatedBoolean preventUnequipWhenNotEmpty = new ValidatedBoolean(false);
+	public ValidatedBoolean equippableItemTooltip = new ValidatedBoolean(true);
 	public ValidatedList<AllowedItem> allowedItems = allowedItem.toList(
 			new AllowedItem("#minecraft:arrows", 0, 0),
 			new AllowedItem("#minecraft:lanterns", 1, 1),
