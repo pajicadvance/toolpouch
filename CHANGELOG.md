@@ -1,1 +1,1 @@
-- Fixed items in tool pouch not functioning if the tool pouch is equipped in the trinket slot.
+- Changed color of the "Equippable in Tool Pouch" tooltip to gray.

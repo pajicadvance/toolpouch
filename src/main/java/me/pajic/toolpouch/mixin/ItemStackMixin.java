@@ -7,6 +7,7 @@ import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.component.ModDataComponents;
 import me.pajic.toolpouch.item.ModItems;
 import me.pajic.toolpouch.util.GameplayUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -94,7 +95,7 @@ public abstract class ItemStackMixin {
 				ToolPouch.CONFIG.allowedItems.stream().anyMatch(allowedItem ->
 						GameplayUtil.itemMatches(stack, allowedItem.id.get()).rightBoolean())
 		) {
-			lines.add(Component.translatable("text.toolpouch.equippable"));
+			lines.add(Component.translatable("text.toolpouch.equippable").withStyle(ChatFormatting.GRAY));
 		}
 	}
 }
