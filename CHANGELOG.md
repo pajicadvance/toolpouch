@@ -1,1 +1,2 @@
-- Fixed equipped lanterns not emitting light underwater.
+- Added recipe unlock conditions.
+- Allow detaching tool pouches from leggings when "Allow attaching to leggings" is off.

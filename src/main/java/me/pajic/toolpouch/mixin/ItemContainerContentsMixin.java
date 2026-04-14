@@ -2,7 +2,6 @@ package me.pajic.toolpouch.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.component.ModDataComponents;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponents;
@@ -11,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.equipment.Equippable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,16 +28,15 @@ public class ItemContainerContentsMixin {
 			DataComponentGetter components,
 			Operation<Void> original
 	) {
-		if (ToolPouch.CONFIG.canAttachToLeggings.get()) {
-			Equippable equippable = components.get(DataComponents.EQUIPPABLE);
+		Equippable equippable = components.get(DataComponents.EQUIPPABLE);
+		ItemAttributeModifiers modifiers = components.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
+		if (equippable != null && equippable.slot() == EquipmentSlot.LEGS && modifiers != ItemAttributeModifiers.EMPTY) {
 			DyedItemColor storedDye = components.get(ModDataComponents.STORED_TOOL_POUCH_DYE);
-			if (equippable != null && equippable.slot() == EquipmentSlot.LEGS) {
-				consumer.accept(
+			consumer.accept(
 					Component.translatable("text.toolpouch.attachment").withColor(
 							storedDye != null ? storedDye.rgb() : -6265536
 					)
-				);
-			}
+			);
 		}
 		original.call(context, consumer, flag, components);
 	}

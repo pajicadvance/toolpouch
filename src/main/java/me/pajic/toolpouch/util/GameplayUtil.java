@@ -23,9 +23,7 @@ public class GameplayUtil {
 	}
 
 	public static boolean isLeggingsWithPouchAttached(ItemStack stack) {
-		return ToolPouch.CONFIG.canAttachToLeggings.get() &&
-				stack.is(ItemTags.LEG_ARMOR) &&
-				stack.has(DataComponents.CONTAINER);
+		return stack.is(ItemTags.LEG_ARMOR) && stack.has(DataComponents.CONTAINER);
 	}
 
 	public static boolean isHoldingProjectileWeapon(Player player) {

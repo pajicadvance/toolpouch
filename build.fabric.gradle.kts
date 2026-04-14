@@ -74,7 +74,7 @@ dependencies {
 	compileOnly("maven.modrinth:raised:${prop("deps.raised")}")
 	compileOnly("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-fabric")
 	compileOnly("maven.modrinth:locator_lodestones:${prop("deps.locastones")}")
-	compileOnly(rootProject.files("ext/spyglass_astronomy-1.0.20-mc26.1.1.jar"))
+	compileOnly("maven.modrinth:spyglass-astronomy:${prop("deps.spyglassastronomy")}")
 	compileOnlyApi("eu.pb4:trinkets:${prop("deps.trinkets")}")
 	runtimeOnly("eu.pb4:trinkets:${prop("deps.trinkets")}")
 }

@@ -1,7 +1,6 @@
 package me.pajic.toolpouch.recipe;
 
 import com.mojang.serialization.MapCodec;
-import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.component.ModDataComponents;
 import me.pajic.toolpouch.item.ModItems;
 import me.pajic.toolpouch.util.GameplayUtil;
@@ -26,7 +25,7 @@ public class DetachToolPouchRecipe extends CustomRecipe {
 
 	@Override
 	public boolean matches(@NotNull CraftingInput input, @NotNull Level level) {
-		if (!ToolPouch.CONFIG.canAttachToLeggings.get() || input.size() != 1) return false;
+		if (input.size() != 1) return false;
 		ItemStack itemStack = input.getItem(0);
 		return !itemStack.isEmpty() && GameplayUtil.isLeggingsWithPouchAttached(itemStack);
 	}
