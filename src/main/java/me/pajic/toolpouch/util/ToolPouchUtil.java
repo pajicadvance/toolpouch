@@ -134,7 +134,10 @@ public class ToolPouchUtil {
 	}
 
 	private static ItemStack getToolPouch(Player player) {
-		ItemStack pouch = player.getItemBySlot(EquipmentSlot.LEGS);
+		ItemStack pouch = ItemStack.EMPTY;
+		if (CompatFlags.TRINKETS_LOADED) pouch = TrinketsCompat.tryGetTrinketToolPouch(player);
+		if (!pouch.isEmpty()) return pouch;
+		pouch = player.getItemBySlot(EquipmentSlot.LEGS);
 		return GameplayUtil.isValidContainerHolder(pouch) ? pouch : player.getInventory().getNonEquipmentItems()
 				.stream().filter(stack -> stack.is(GameplayUtil.TOOL_POUCHES))
 				.findFirst().orElse(ItemStack.EMPTY);

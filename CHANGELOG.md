@@ -1,1 +1,1 @@
-- Items which can be stored inside the Tool Pouch will now indicate that in their tooltip. This can be disabled in the mod configuration.
+- Fixed items in tool pouch not functioning if the tool pouch is equipped in the trinket slot.
