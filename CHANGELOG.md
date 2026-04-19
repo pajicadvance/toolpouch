@@ -1,6 +1,1 @@
-1.0.13:
-- Added support for Ohmega.
-- Fixed startup issue on latest NeoForge.
-
-1.0.14:
-- Changed mod ID for Trinkets Updated to match the latest version.
+- Player cape now correctly hides itself when an elytra from a tool pouch is equipped.
