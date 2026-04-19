@@ -76,5 +76,8 @@ dependencies {
 	compileOnly("maven.modrinth:locator_lodestones:${prop("deps.locastones")}")
 	compileOnly("maven.modrinth:spyglass-astronomy:${prop("deps.spyglassastronomy")}")
 	compileOnlyApi("eu.pb4:trinkets:${prop("deps.trinkets")}")
-	runtimeOnly("eu.pb4:trinkets:${prop("deps.trinkets")}")
+	//runtimeOnly("eu.pb4:trinkets:${prop("deps.trinkets")}")
+	compileOnly("io.github.swackyy:ohmega-fabric:${prop("deps.ohmega")}")
+	runtimeOnly("io.github.swackyy:ohmega-fabric:${prop("deps.ohmega")}")
+	runtimeOnly("maven.modrinth:forge-config-api-port:26.1.3-fabric")
 }

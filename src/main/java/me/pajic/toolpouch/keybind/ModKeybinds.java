@@ -3,6 +3,7 @@ package me.pajic.toolpouch.keybind;
 import com.mojang.blaze3d.platform.InputConstants;
 import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.ToolPouchClient;
+import me.pajic.toolpouch.compat.OhmegaCompat;
 import me.pajic.toolpouch.hud.ContextualSelectionWidget;
 import me.pajic.toolpouch.hud.MinimapOverlay;
 import me.pajic.toolpouch.network.ModPayloads;
@@ -10,7 +11,7 @@ import me.pajic.toolpouch.util.ClientUtil;
 import me.pajic.toolpouch.util.CompatFlags;
 import me.pajic.toolpouch.util.GameplayUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
-import me.pajic.toolpouch.util.TrinketsCompat;
+import me.pajic.toolpouch.compat.TrinketsCompat;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
@@ -105,6 +106,7 @@ public class ModKeybinds {
 			if (OPEN_TOOL_POUCH.consumeClick()) {
 				ItemStack legsItem = ItemStack.EMPTY;
 				if (CompatFlags.TRINKETS_LOADED) legsItem = TrinketsCompat.tryGetTrinketToolPouch(player);
+				if (CompatFlags.OHMEGA_LOADED) legsItem = OhmegaCompat.tryGetOhmegaToolPouch(player);
 				if (!legsItem.isEmpty()) ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(2));
 				else {
 					legsItem = player.getItemBySlot(EquipmentSlot.LEGS);

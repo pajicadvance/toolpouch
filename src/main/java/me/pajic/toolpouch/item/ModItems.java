@@ -1,8 +1,9 @@
 package me.pajic.toolpouch.item;
 
 import me.pajic.toolpouch.ToolPouch;
+import me.pajic.toolpouch.compat.OhmegaCompat;
 import me.pajic.toolpouch.util.CompatFlags;
-import me.pajic.toolpouch.util.TrinketsCompat;
+import me.pajic.toolpouch.compat.TrinketsCompat;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -24,6 +25,7 @@ public class ModItems {
 
 	private static ToolPouchItem makeToolPouch(Item.Properties properties) {
 		if (CompatFlags.TRINKETS_LOADED) return TrinketsCompat.makeTrinketToolPouch(properties);
+		if (CompatFlags.OHMEGA_LOADED) return OhmegaCompat.makeOhmegaToolPouch(properties);
 		return new ToolPouchItem(properties);
 	}
 

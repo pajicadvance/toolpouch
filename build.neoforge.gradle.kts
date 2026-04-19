@@ -72,6 +72,10 @@ dependencies {
 	compileOnly("maven.modrinth:raised:${prop("deps.raised")}")
 	compileOnly("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-neoforge")
 	compileOnlyApi("eu.pb4:trinkets:${prop("deps.trinkets")}")
+	//runtimeOnly("eu.pb4:trinkets:${prop("deps.trinkets")}")
+	compileOnly("io.github.swackyy:ohmega-neoforge:${prop("deps.ohmega")}")
+	runtimeOnly("io.github.swackyy:ohmega-neoforge:${prop("deps.ohmega")}")
+	runtimeOnly("maven.modrinth:forge-config-api-port:26.1.3-neoforge")
 }
 
 tasks.named("createMinecraftArtifacts") {

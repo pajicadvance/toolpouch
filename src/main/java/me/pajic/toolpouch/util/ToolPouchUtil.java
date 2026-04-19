@@ -2,6 +2,8 @@ package me.pajic.toolpouch.util;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import me.pajic.toolpouch.ToolPouch;
+import me.pajic.toolpouch.compat.OhmegaCompat;
+import me.pajic.toolpouch.compat.TrinketsCompat;
 import me.pajic.toolpouch.item.ModItems;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
@@ -136,6 +138,7 @@ public class ToolPouchUtil {
 	private static ItemStack getToolPouch(Player player) {
 		ItemStack pouch = ItemStack.EMPTY;
 		if (CompatFlags.TRINKETS_LOADED) pouch = TrinketsCompat.tryGetTrinketToolPouch(player);
+		if (CompatFlags.OHMEGA_LOADED) pouch = OhmegaCompat.tryGetOhmegaToolPouch(player);
 		if (!pouch.isEmpty()) return pouch;
 		pouch = player.getItemBySlot(EquipmentSlot.LEGS);
 		return GameplayUtil.isValidContainerHolder(pouch) ? pouch : player.getInventory().getNonEquipmentItems()

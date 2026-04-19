@@ -1,11 +1,13 @@
 package me.pajic.toolpouch.network;
 
 import me.pajic.toolpouch.ToolPouch;
+import me.pajic.toolpouch.compat.OhmegaCompat;
 import me.pajic.toolpouch.menu.ShulkerBoxContainerMenu;
+import me.pajic.toolpouch.util.CompatFlags;
 import me.pajic.toolpouch.util.GameplayUtil;
 import me.pajic.toolpouch.util.PlayerExtension;
 import me.pajic.toolpouch.util.ToolPouchUtil;
-import me.pajic.toolpouch.util.TrinketsCompat;
+import me.pajic.toolpouch.compat.TrinketsCompat;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -29,7 +31,11 @@ public class NetworkEvents {
 					.filter(stack -> stack.is(GameplayUtil.TOOL_POUCHES))
 					.findFirst().orElse(ItemStack.EMPTY);
 			case 1 -> player.getItemBySlot(EquipmentSlot.LEGS);
-			case 2 -> TrinketsCompat.tryGetTrinketToolPouch(player);
+			case 2 -> {
+				if (CompatFlags.TRINKETS_LOADED) yield TrinketsCompat.tryGetTrinketToolPouch(player);
+				if (CompatFlags.OHMEGA_LOADED) yield OhmegaCompat.tryGetOhmegaToolPouch(player);
+				yield ItemStack.EMPTY;
+			}
 			default -> ItemStack.EMPTY;
 		};
 		if (!toolPouch.isEmpty()) ToolPouch.xplat().openToolPouchScreen(player, toolPouch);
