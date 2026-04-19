@@ -1,1 +1,2 @@
-- Changed color of the "Equippable in Tool Pouch" tooltip to gray.
+- Added support for Ohmega.
+- Fixed startup issue on latest NeoForge.
