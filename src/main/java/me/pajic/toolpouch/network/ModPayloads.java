@@ -1,9 +1,11 @@
 package me.pajic.toolpouch.network;
 
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -116,6 +118,19 @@ public class ModPayloads {
 		public static final Type<C2SElytraBoostFromPouchPayload> TYPE = new Type<>(NetworkConstants.ELYTRA_BOOST_FROM_POUCH);
 		public static final StreamCodec<RegistryFriendlyByteBuf, C2SElytraBoostFromPouchPayload> CODEC = StreamCodec.unit(
 				new C2SElytraBoostFromPouchPayload()
+		);
+
+		@Override
+		public @NotNull Type<? extends CustomPacketPayload> type() {
+			return TYPE;
+		}
+	}
+
+	public record C2SPlaySoundPayload(Holder<SoundEvent> sound) implements CustomPacketPayload {
+		public static final Type<C2SPlaySoundPayload> TYPE = new Type<>(NetworkConstants.PLAY_SOUND);
+		public static final StreamCodec<RegistryFriendlyByteBuf, C2SPlaySoundPayload> CODEC = StreamCodec.composite(
+				SoundEvent.STREAM_CODEC, C2SPlaySoundPayload::sound,
+				C2SPlaySoundPayload::new
 		);
 
 		@Override

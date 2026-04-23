@@ -11,15 +11,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.List;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin extends Avatar {
@@ -54,7 +51,7 @@ public abstract class PlayerMixin extends Avatar {
 	)
 	private void tickMapsInToolPouch(CallbackInfo ci) {
 		Player self = (Player) (Object) this;
-		List<ItemStack> maps = ToolPouchUtil.getItemsFromToolPouch(self, stack -> stack.has(DataComponents.MAP_ID));
-		maps.forEach(map -> map.inventoryTick(level(), self, EquipmentSlot.MAINHAND));
+		ToolPouchUtil.getItemsFromToolPouch(self, stack -> stack.has(DataComponents.MAP_ID))
+				.forEach(map -> map.inventoryTick(level(), self, EquipmentSlot.MAINHAND));
 	}
 }

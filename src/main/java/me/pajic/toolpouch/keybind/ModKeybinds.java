@@ -16,6 +16,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -65,12 +66,14 @@ public class ModKeybinds {
 			if (USE_SPYGLASS.isDown() && ToolPouchUtil.toolPouchHasItem(player, stack -> stack.is(Items.SPYGLASS))) {
 				if (!soundPlayed) {
 					player.playSound(SoundEvents.SPYGLASS_USE);
+					ToolPouch.xplat().sendToServer(new ModPayloads.C2SPlaySoundPayload(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SPYGLASS_USE)));
 					soundPlayed = true;
 				}
 				ClientUtil.shouldScope = true;
 			} else {
 				if (soundPlayed) {
 					player.playSound(SoundEvents.SPYGLASS_STOP_USING);
+					ToolPouch.xplat().sendToServer(new ModPayloads.C2SPlaySoundPayload(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SPYGLASS_STOP_USING)));
 					soundPlayed = false;
 				}
 				ClientUtil.shouldScope = false;
@@ -105,18 +108,25 @@ public class ModKeybinds {
 			}
 			if (OPEN_TOOL_POUCH.consumeClick()) {
 				ItemStack legsItem = ItemStack.EMPTY;
+				// 2 - open from trinket/accessory API slot
+				// 1 - open from leg slot
+				// 0 - open from inventory
+				int openMethod = -1;
 				if (CompatFlags.TRINKETS_LOADED) legsItem = TrinketsCompat.tryGetTrinketToolPouch(player);
 				if (CompatFlags.OHMEGA_LOADED) legsItem = OhmegaCompat.tryGetOhmegaToolPouch(player);
-				if (!legsItem.isEmpty()) ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(2));
+				if (!legsItem.isEmpty()) openMethod = 2;
 				else {
 					legsItem = player.getItemBySlot(EquipmentSlot.LEGS);
-					if (GameplayUtil.isValidContainerHolder(legsItem)) {
-						ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(1));
-					} else if (ToolPouch.CONFIG.canOpenFromInventory.get()) {
+					if (GameplayUtil.isValidContainerHolder(legsItem)) openMethod = 1;
+					else if (ToolPouch.CONFIG.canOpenFromInventory.get()) {
 						if (player.getInventory().getNonEquipmentItems().stream().anyMatch(stack -> stack.is(GameplayUtil.TOOL_POUCHES))) {
-							ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(0));
+							openMethod = 0;
 						}
 					}
+				}
+				if (openMethod != -1) {
+					player.playSound(SoundEvents.BUNDLE_INSERT);
+					ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenToolPouchPayload(openMethod));
 				}
 			}
 			if (TOGGLE_MINIMAP.consumeClick()) {

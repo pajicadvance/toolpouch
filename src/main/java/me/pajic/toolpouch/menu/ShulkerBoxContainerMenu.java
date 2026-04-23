@@ -4,7 +4,6 @@ import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
@@ -35,9 +34,8 @@ public class ShulkerBoxContainerMenu implements Container, MenuProvider {
 
     @Override
     public void startOpen(@NotNull ContainerUser user) {
-        if (user instanceof Player player) {
+        if (user instanceof Player) {
             shulker.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyInto(items);
-            player.playSound(SoundEvents.SHULKER_BOX_OPEN);
         }
     }
 
@@ -46,7 +44,6 @@ public class ShulkerBoxContainerMenu implements Container, MenuProvider {
         if (user instanceof Player player) {
             shulker.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items));
 			ToolPouchUtil.replaceItemInToolPouch(player, shulker, stack -> stack.is(ItemTags.SHULKER_BOXES), slotInToolPouch);
-            player.playSound(SoundEvents.SHULKER_BOX_CLOSE);
         }
     }
 

@@ -87,6 +87,7 @@ public class FabricEntrypoint implements ModInitializer {
 		PayloadTypeRegistry.serverboundPlay().register(ModPayloads.C2SSyncArrowSlot.TYPE, ModPayloads.C2SSyncArrowSlot.CODEC);
 		PayloadTypeRegistry.clientboundPlay().register(ModPayloads.S2CSyncArrowSlot.TYPE, ModPayloads.S2CSyncArrowSlot.CODEC);
 		PayloadTypeRegistry.serverboundPlay().register(ModPayloads.C2SElytraBoostFromPouchPayload.TYPE, ModPayloads.C2SElytraBoostFromPouchPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(ModPayloads.C2SPlaySoundPayload.TYPE, ModPayloads.C2SPlaySoundPayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(
 				ModPayloads.C2SOpenToolPouchPayload.TYPE,
 				(payload, context) -> NetworkEvents.tryOpenToolPouch(context.player(), payload.openMethod())
@@ -110,6 +111,10 @@ public class FabricEntrypoint implements ModInitializer {
 		ServerPlayNetworking.registerGlobalReceiver(
 				ModPayloads.C2SElytraBoostFromPouchPayload.TYPE,
 				(payload, context) -> NetworkEvents.elytraBoostFromPouch(context.player())
+		);
+		ServerPlayNetworking.registerGlobalReceiver(
+				ModPayloads.C2SPlaySoundPayload.TYPE,
+				(payload, context) -> NetworkEvents.playSound(context.player(), payload.sound())
 		);
 	}
 }

@@ -132,6 +132,12 @@ public class NeoforgeEntrypoint {
 				(_, context) ->
 						NetworkEvents.elytraBoostFromPouch((ServerPlayer) context.player())
 		);
+		registrar.playToServer(
+				ModPayloads.C2SPlaySoundPayload.TYPE,
+				ModPayloads.C2SPlaySoundPayload.CODEC,
+				(payload, context) ->
+						NetworkEvents.playSound((ServerPlayer) context.player(), payload.sound())
+		);
 	}
 }
 *///?}

@@ -14,4 +14,5 @@ public class NetworkConstants {
 	public static final Identifier C2S_SYNC_ARROW_SLOT = ToolPouch.id("c2s_sync_arrow_slot");
 	public static final Identifier S2C_SYNC_ARROW_SLOT = ToolPouch.id("s2c_sync_arrow_slot");
 	public static final Identifier ELYTRA_BOOST_FROM_POUCH = ToolPouch.id("elytra_boost_from_pouch");
+	public static final Identifier PLAY_SOUND = ToolPouch.id("play_sound");
 }

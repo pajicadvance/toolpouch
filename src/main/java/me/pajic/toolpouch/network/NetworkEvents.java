@@ -8,8 +8,10 @@ import me.pajic.toolpouch.util.GameplayUtil;
 import me.pajic.toolpouch.util.PlayerExtension;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import me.pajic.toolpouch.compat.TrinketsCompat;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
@@ -27,6 +29,9 @@ public class NetworkEvents {
 
 	public static void tryOpenToolPouch(ServerPlayer player, int openMethod) {
 		ItemStack toolPouch = switch (openMethod) {
+			// 2 - open from trinket/accessory API slot
+			// 1 - open from leg slot
+			// 0 - open from inventory
 			case 0 -> player.getInventory().getNonEquipmentItems().stream()
 					.filter(stack -> stack.is(GameplayUtil.TOOL_POUCHES))
 					.findFirst().orElse(ItemStack.EMPTY);
@@ -38,10 +43,14 @@ public class NetworkEvents {
 			}
 			default -> ItemStack.EMPTY;
 		};
-		if (!toolPouch.isEmpty()) ToolPouch.xplat().openToolPouchScreen(player, toolPouch);
+		if (!toolPouch.isEmpty()) {
+			player.playSound(SoundEvents.BUNDLE_INSERT);
+			ToolPouch.xplat().openToolPouchScreen(player, toolPouch);
+		}
 	}
 
 	public static void openShulkerBox(ServerPlayer player, int index) {
+		player.playSound(SoundEvents.SHULKER_BOX_OPEN);
 		ItemStack shulker = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ItemTags.SHULKER_BOXES)).get(index);
 		player.openMenu(new ShulkerBoxContainerMenu(shulker, 27, index));
 		player.awardStat(Stats.OPEN_SHULKER_BOX);
@@ -54,6 +63,10 @@ public class NetworkEvents {
 				ChestMenu.threeRows(i, inventory, container), Component.translatable("container.enderchest")
 		));
 		player.awardStat(Stats.OPEN_ENDERCHEST);
+	}
+
+	public static void playSound(ServerPlayer player, Holder<SoundEvent> sound) {
+		player.playSound(sound.value());
 	}
 
 	public static void syncShulkerSlotToServer(ServerPlayer player, int slot) {

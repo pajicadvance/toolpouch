@@ -6,10 +6,10 @@ import me.pajic.toolpouch.network.ModPayloads;
 import me.pajic.toolpouch.util.ClientUtil;
 import me.pajic.toolpouch.util.GameplayUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -19,14 +19,16 @@ public class ScrollHandler {
     public static int selectedShulkerSlot = 0;
     public static int selectedArrowSlot = 0;
 
-    public static boolean handleMouseScroll(Inventory inventory, int direction) {
-        Player player = inventory.player;
+    public static boolean handleMouseScroll(LocalPlayer player, int direction) {
         if (ClientUtil.shouldScope) {
             if (direction != 0) {
                 ClientUtil.zoomModifier -= direction * (0.1F * ClientUtil.zoomModifier);
                 if (ClientUtil.zoomModifier > 10) ClientUtil.zoomModifier = 10;
                 else if (ClientUtil.zoomModifier < 0.1) ClientUtil.zoomModifier = 0.1F;
-                else player.playSound(SoundEvents.SPYGLASS_STOP_USING);
+                else {
+					player.playSound(SoundEvents.SPYGLASS_STOP_USING);
+	                ToolPouch.xplat().sendToServer(new ModPayloads.C2SPlaySoundPayload(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SPYGLASS_STOP_USING)));
+                }
             }
             return false;
         } else if (GameplayUtil.isHoldingProjectileWeapon(player) && ContextualSelectionWidget.widgetOpen) {

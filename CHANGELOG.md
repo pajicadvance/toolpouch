@@ -1,1 +1,3 @@
-- Player cape now correctly hides itself when an elytra from a tool pouch is equipped.
+- Added support for map atlases from Improved Maps. They can now be equipped in the tool pouch, update while in the tool pouch, and the active map of the first atlas in the tool pouch will show up in the minimap overlay.
+- Opening the tool pouch now makes a sound.
+- Fixed a bunch of bugs related to playing sounds.
