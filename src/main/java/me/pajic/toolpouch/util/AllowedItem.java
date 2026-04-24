@@ -27,4 +27,9 @@ public class AllowedItem implements Walkable {
 		this.maxStackSize = new ValidatedInt(1, 64, 0);
 		this.maxStackCount = new ValidatedInt(1, 64, 0);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof AllowedItem ai && ai.id.get().equals(this.id.get());
+	}
 }

@@ -4,7 +4,7 @@ import me.fzzyhmstrs.fzzy_config.annotations.Version;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import me.fzzyhmstrs.fzzy_config.validation.ValidatedField;
-import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedList;
+import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedSet;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedAny;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedBoolean;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
@@ -52,12 +52,12 @@ public class ModConfig extends Config {
 	public ValidatedBoolean canAttachToLeggings = new ValidatedBoolean(true);
 	public ValidatedBoolean preventUnequipWhenNotEmpty = new ValidatedBoolean(false);
 	public ValidatedBoolean equippableItemTooltip = new ValidatedBoolean(true);
-	public ValidatedList<AllowedItem> allowedItems = allowedItem.toList(
+	public ValidatedSet<AllowedItem> allowedItems = allowedItem.toSet(
 			new AllowedItem("#minecraft:arrows", 0, 0),
 			new AllowedItem("#minecraft:lanterns", 1, 1),
 			new AllowedItem("#minecraft:shulker_boxes", 1, 0),
 			new AllowedItem("minecraft:clock", 1, 1),
-			new AllowedItem("minecraft:compass", 1, 1),
+			new AllowedItem("minecraft:compass", 1, 0),
 			new AllowedItem("minecraft:elytra", 1, 1),
 			new AllowedItem("minecraft:ender_chest", 1, 1),
 			new AllowedItem("minecraft:filled_map", 1, 0),
@@ -65,6 +65,8 @@ public class ModConfig extends Config {
 			new AllowedItem("minecraft:recovery_compass", 1, 1),
 			new AllowedItem("minecraft:spyglass", 1, 1),
 			new AllowedItem("minecraft:totem_of_undying", 1, 1),
+			new AllowedItem("improved-maps:atlas", 1, 0),
+			new AllowedItem("sereneseasons:calendar", 1, 1),
 			new AllowedItem("spelunkery:magnetic_compass", 1, 1),
 			new AllowedItem("firmaciv:nav_clock", 1, 1),
 			new AllowedItem("firmaciv:firmaciv_compass", 1, 1),
@@ -80,7 +82,6 @@ public class ModConfig extends Config {
 			new AllowedItem("toughasnails:thermometer", 1, 1),
 			new AllowedItem("legendarysurvivaloverhaul:thermometer", 1, 1),
 			new AllowedItem("cold_sweat:thermometer", 1, 1),
-			new AllowedItem("sereneseasons:calendar", 1, 1),
 			new AllowedItem("seasonsextras:season_calendar", 1, 1),
 			new AllowedItem("eclipticseasons:calendar", 1, 1),
 			new AllowedItem("oreganized:speedometer", 1, 1),
@@ -101,6 +102,7 @@ public class ModConfig extends Config {
 		public ValidatedBoolean obfuscateCompassIfNotOverworld = new ValidatedBoolean(false);
 		public ValidatedBoolean obfuscateClockIfNotOverworld = new ValidatedBoolean(true);
 		public ValidatedBoolean useObfuscationEffect = new ValidatedBoolean(true);
+		public ValidatedBoolean hideCalendarTooltip = new ValidatedBoolean(false);
 	}
 
 	public static class OverlayFields extends ConfigSection {
@@ -109,6 +111,7 @@ public class ModConfig extends Config {
 		public ValidatedBoolean biome = new ValidatedBoolean(true);
 		public ValidatedBoolean dayAndTime = new ValidatedBoolean(true);
 		public ValidatedBoolean weather = new ValidatedBoolean(true);
+		public ValidatedBoolean season = new ValidatedBoolean(true);
 		public ValidatedBoolean moonPhase = new ValidatedBoolean(true);
 		public ValidatedBoolean lastDeathLocation = new ValidatedBoolean(true);
 	}

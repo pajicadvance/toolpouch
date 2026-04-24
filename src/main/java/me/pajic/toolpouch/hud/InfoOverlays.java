@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import it.unimi.dsi.fastutil.objects.ObjectIntImmutablePair;
 import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.ToolPouchClient;
+import me.pajic.toolpouch.compat.SeasonsCompat;
 import me.pajic.toolpouch.util.CompatFlags;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.ChatFormatting;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.biome.Biome;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @SuppressWarnings("ConstantConditions")
@@ -44,6 +46,9 @@ public class InfoOverlays {
 			if (ToolPouchUtil.toolPouchHasItem(MC.player, stack -> stack.is(Items.CLOCK)))  {
                 prepareClockOverlay(shouldObfuscateClock);
             }
+			if (CompatFlags.SEASONS_LOADED && SeasonsCompat.toolPouchHasCalendar(MC.player)) {
+				prepareSeasonOverlay(shouldObfuscateClock);
+			}
             if (ToolPouchUtil.toolPouchHasItem(MC.player, stack -> stack.is(Items.RECOVERY_COMPASS))) {
                 prepareRecoveryCompassOverlay();
             }
@@ -58,37 +63,68 @@ public class InfoOverlays {
 	private static void prepareCompassOverlay(boolean shouldObfuscate) {
         if (shouldObfuscate) {
             if (ToolPouch.CONFIG.infoOverlaySettings.useObfuscationEffect.get()) {
-                Component obfuscatedText = Component.literal("" + ChatFormatting.WHITE + ChatFormatting.OBFUSCATED + "XXXXXXXX".substring(0, MC.level.getRandom().nextInt(4) + 3));
-                if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.coordinates.get())
-                    renderList.add(new ObjectIntImmutablePair<>(obfuscatedText, WHITE));
-                if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.direction.get())
-                    renderList.add(new ObjectIntImmutablePair<>(obfuscatedText, WHITE));
+                Component obfuscatedText = makeObfuscatedString();
+				boolean coordinates = ToolPouch.CONFIG.infoOverlaySettings.overlayFields.coordinates.get();
+				boolean direction = ToolPouch.CONFIG.infoOverlaySettings.overlayFields.direction.get();
+				if (ToolPouchClient.CONFIG.infoOverlaySettings.combinedPositionAndDirection.get()) {
+					if (coordinates || direction) renderList.add(new ObjectIntImmutablePair<>(obfuscatedText, WHITE));
+				} else {
+					if (coordinates) renderList.add(new ObjectIntImmutablePair<>(obfuscatedText, WHITE));
+					if (direction) renderList.add(new ObjectIntImmutablePair<>(obfuscatedText, WHITE));
+				}
                 if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.biome.get())
                     renderList.add(new ObjectIntImmutablePair<>(obfuscatedText, WHITE));
             }
         } else {
             BlockPos blockPos = MC.player.blockPosition();
 
-            if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.coordinates.get()) {
-                Component coordinates;
-                if (ToolPouch.CONFIG.infoOverlaySettings.showYCoordinate.get()) {
-                    coordinates = Component.translatable(
-                            "gui.toolpouch.coordinates_xyz",
-                            blockPos.getX(), blockPos.getY(), blockPos.getZ()
-                    );
-                } else {
-                    coordinates = Component.translatable(
-                            "gui.toolpouch.coordinates_xz",
-                            blockPos.getX(), blockPos.getZ()
-                    );
-                }
-                renderList.add(new ObjectIntImmutablePair<>(coordinates, WHITE));
-            }
+			if (ToolPouchClient.CONFIG.infoOverlaySettings.combinedPositionAndDirection.get()) {
+				MutableComponent combined = Component.empty();
 
-            if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.direction.get()) {
-                Component direction = Component.translatable("gui.toolpouch.facing", MC.player.getDirection().getName());
-                renderList.add(new ObjectIntImmutablePair<>(direction, WHITE));
-            }
+				if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.direction.get()) {
+					combined.append(Component.literal(MC.player.getDirection().getName().substring(0, 1).toUpperCase(Locale.ROOT)));
+				}
+
+				if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.coordinates.get()) {
+					Component coordinates;
+					if (!combined.equals(Component.empty())) combined.append(" ");
+					if (ToolPouch.CONFIG.infoOverlaySettings.showYCoordinate.get()) {
+						coordinates = Component.translatable(
+								"gui.toolpouch.coordinates_xyz",
+								blockPos.getX(), blockPos.getY(), blockPos.getZ()
+						);
+					} else {
+						coordinates = Component.translatable(
+								"gui.toolpouch.coordinates_xz",
+								blockPos.getX(), blockPos.getZ()
+						);
+					}
+					combined.append(coordinates);
+				}
+
+				renderList.add(new ObjectIntImmutablePair<>(combined, WHITE));
+	        } else {
+				if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.coordinates.get()) {
+					Component coordinates;
+					if (ToolPouch.CONFIG.infoOverlaySettings.showYCoordinate.get()) {
+						coordinates = Component.translatable(
+								"gui.toolpouch.coordinates_xyz",
+								blockPos.getX(), blockPos.getY(), blockPos.getZ()
+						);
+					} else {
+						coordinates = Component.translatable(
+								"gui.toolpouch.coordinates_xz",
+								blockPos.getX(), blockPos.getZ()
+						);
+					}
+					renderList.add(new ObjectIntImmutablePair<>(coordinates, WHITE));
+				}
+
+				if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.direction.get()) {
+					Component direction = Component.translatable("gui.toolpouch.facing", MC.player.getDirection().getName());
+					renderList.add(new ObjectIntImmutablePair<>(direction, WHITE));
+				}
+			}
 
             if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.biome.get()) {
 				MC.player.level().getBiome(blockPos).unwrapKey().ifPresentOrElse(key -> {
@@ -106,7 +142,7 @@ public class InfoOverlays {
     private static void prepareClockOverlay(boolean shouldObfuscate) {
         if (shouldObfuscate) {
             if (ToolPouch.CONFIG.infoOverlaySettings.useObfuscationEffect.get()) {
-                Component obfuscatedText = Component.literal("" + ChatFormatting.WHITE + ChatFormatting.OBFUSCATED + "XXXXXXXX".substring(0, MC.level.getRandom().nextInt(4) + 3));
+                Component obfuscatedText = makeObfuscatedString();
                 if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.dayAndTime.get())
                     renderList.add(new ObjectIntImmutablePair<>(obfuscatedText, WHITE));
                 if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.weather.get())
@@ -191,6 +227,27 @@ public class InfoOverlays {
             }
         }
     }
+
+	private static void prepareSeasonOverlay(boolean shouldObfuscate) {
+		if (shouldObfuscate) {
+			if (ToolPouch.CONFIG.infoOverlaySettings.useObfuscationEffect.get()) {
+				Component obfuscatedText = makeObfuscatedString();
+				if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.season.get())
+					renderList.add(new ObjectIntImmutablePair<>(obfuscatedText, WHITE));
+			}
+		} else {
+			if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.season.get()) {
+				if (CompatFlags.SEASONS_LOADED) {
+					ObjectIntImmutablePair<Component> seasonStringData = SeasonsCompat.getSeasonStringData(MC.level);
+					if (ToolPouchClient.CONFIG.infoOverlaySettings.coloredSeason.get()) {
+						renderList.add(seasonStringData);
+					} else {
+						renderList.add(new ObjectIntImmutablePair<>(seasonStringData.left(), WHITE));
+					}
+				}
+			}
+		}
+	}
 
     private static void prepareRecoveryCompassOverlay() {
         if (ToolPouch.CONFIG.infoOverlaySettings.overlayFields.lastDeathLocation.get()) {
@@ -292,4 +349,11 @@ public class InfoOverlays {
         }
         guiGraphics.text(font, text, x, y, color, ToolPouchClient.CONFIG.infoOverlaySettings.textShadow.get());
     }
+
+	private static Component makeObfuscatedString() {
+		return Component.literal(
+				"" + ChatFormatting.WHITE + ChatFormatting.OBFUSCATED +
+				"XXXXXXXX".substring(0, MC.level.getRandom().nextInt(4) + 3)
+		);
+	}
 }

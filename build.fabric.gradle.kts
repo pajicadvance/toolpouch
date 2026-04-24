@@ -75,6 +75,8 @@ dependencies {
 	compileOnly("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-fabric")
 	compileOnly("maven.modrinth:locator_lodestones:${prop("deps.locastones")}")
 	compileOnly("maven.modrinth:spyglass-astronomy:${prop("deps.spyglassastronomy")}")
+	compileOnly("maven.modrinth:improved-maps:${prop("deps.improvedmaps")}")
+	compileOnly("maven.modrinth:serene-seasons:${prop("deps.seasons")}")
 	compileOnlyApi("eu.pb4:trinkets:${prop("deps.trinkets")}")
 	//runtimeOnly("eu.pb4:trinkets:${prop("deps.trinkets")}")
 	compileOnly("io.github.swackyy:ohmega-fabric:${prop("deps.ohmega")}")

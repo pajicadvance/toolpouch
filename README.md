@@ -102,6 +102,8 @@ By default, there is no limit on how many fireworks can be stored inside the Too
 
 - [Trinkets (Updated)](https://modrinth.com/mod/trinkets-updated): Allows equipping the tool pouch as a trinket and opening it by pressing a keybind (default H).
 - [Locator Lodestones](https://modrinth.com/mod/locator_lodestones): Lodestone compasses stored in the tool pouch will show up on the locator bar.
+- [Improved Maps](https://modrinth.com/mod/improved-maps): The first map atlas stored in the tool pouch will show its currently active map in the minimap overlay.
+- [Serene Seasons](https://modrinth.com/mod/serene-seasons): Storing a calendar in the tool pouch will show the current season in the info overlay. There's also an optional setting to disable the calendar item tooltip so that the season can only be read from the tool pouch info overlay.
 
 ## FAQ
 

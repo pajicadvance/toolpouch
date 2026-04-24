@@ -3,6 +3,9 @@ package me.pajic.toolpouch.mixin;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import me.pajic.toolpouch.util.ToolPouchUtil;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
@@ -26,6 +29,8 @@ public class MapItemSavedDataMixin {
 			@Local(argsOnly = true, name = "tickingPlayer") Player tickingPlayer,
 			@Local(name = "mapMatcher") Predicate<ItemStack> mapMatcher
 	) {
-		return original || ToolPouchUtil.toolPouchHasItem(tickingPlayer, mapMatcher);
+		return original || ToolPouchUtil.toolPouchHasItem(tickingPlayer, itemStack ->
+				mapMatcher.test(itemStack) || itemStack.is(ResourceKey.create(Registries.ITEM, Identifier.parse("improved-maps:atlas")))
+		);
 	}
 }

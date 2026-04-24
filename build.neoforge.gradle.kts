@@ -71,6 +71,7 @@ dependencies {
 	compileOnly("com.github.pajicadvance:aileron:1.2.1")
 	compileOnly("maven.modrinth:raised:${prop("deps.raised")}")
 	compileOnly("maven.modrinth:shulkerboxtooltip:${prop("deps.sbt")}-neoforge")
+	compileOnly("maven.modrinth:serene-seasons:${prop("deps.seasons")}")
 	compileOnlyApi("eu.pb4:trinkets:${prop("deps.trinkets")}")
 	//runtimeOnly("eu.pb4:trinkets:${prop("deps.trinkets")}")
 	compileOnly("io.github.swackyy:ohmega-neoforge:${prop("deps.ohmega")}")
