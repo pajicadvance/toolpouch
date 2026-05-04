@@ -1,6 +1,1 @@
-- Added support for map atlases from Improved Maps. They can now be equipped in the tool pouch, update while in the tool pouch, and the active map of the first atlas in the tool pouch will show up in the minimap overlay.
-- Added support for the calendar item from Serene Seasons. It can now be equipped in the tool pouch, and will display the current season in the info overlay.
-- Added an option to combine position and direction info lines into one info line.
-- Opening the tool pouch now makes a sound.
-- Fixed a bunch of bugs related to playing sounds.
-- Updated the "Allowed items" config entry. The setting will be reset to default as a result (this is a one-time occurrence as the setting has been converted from a List to a Set).
+- Fixed being unable to use elytras from the tool pouch on NeoForge.

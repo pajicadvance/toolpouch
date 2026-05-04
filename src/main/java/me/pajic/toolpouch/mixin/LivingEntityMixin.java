@@ -63,6 +63,9 @@ public abstract class LivingEntityMixin extends Entity {
 			method = "canGlide",
 			at = @At(
 					value = "RETURN",
+					//? neoforge
+					//ordinal = 1
+					//? fabric
 					ordinal = 2
 			)
 	)
