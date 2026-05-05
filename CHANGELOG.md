@@ -1,1 +1,1 @@
-- Fixed being unable to use elytras from the tool pouch on NeoForge.
+- Prevent picking up the tool pouch from the inventory while it's open.
