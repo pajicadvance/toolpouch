@@ -1,1 +1,1 @@
-- Prevent picking up the tool pouch from the inventory while it's open.
+- Fixed the "Inventory" label being displayed at an incorrect spot in the tool pouch screen when the amount of rows and columns isn't identical.

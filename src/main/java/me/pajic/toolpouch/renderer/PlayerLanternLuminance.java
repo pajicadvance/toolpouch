@@ -2,8 +2,8 @@ package me.pajic.toolpouch.renderer;
 
 import dev.lambdaurora.lambdynlights.api.entity.luminance.EntityLuminance;
 import dev.lambdaurora.lambdynlights.api.item.ItemLightSourceManager;
+import me.pajic.toolpouch.util.ClientUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +26,7 @@ public final class PlayerLanternLuminance implements EntityLuminance {
 	@Override
 	public @Range(from = 0L, to = 15L) int getLuminance(ItemLightSourceManager manager, Entity entity) {
 		if (entity instanceof Player player) {
-			List<ItemStack> lanterns = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ItemTags.LANTERNS));
+			List<ItemStack> lanterns = ToolPouchUtil.getItemsFromToolPouch(player, ClientUtil.getSupportedLanterns());
 			if (!lanterns.isEmpty()) return manager.getLuminance(lanterns.getFirst());
 		}
 		return 0;

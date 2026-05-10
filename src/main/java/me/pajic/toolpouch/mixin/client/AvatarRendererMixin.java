@@ -2,6 +2,7 @@ package me.pajic.toolpouch.mixin.client;
 
 import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import me.pajic.toolpouch.renderer.AvatarRenderStateExtension;
+import me.pajic.toolpouch.util.ClientUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.client.entity.ClientAvatarEntity;
 import net.minecraft.client.model.player.PlayerModel;
@@ -11,7 +12,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -51,9 +51,7 @@ public abstract class AvatarRendererMixin<T1 extends Avatar & ClientAvatarEntity
 			T2 entity, AvatarRenderState state, float partialTicks, CallbackInfo ci
 	) {
 		if (entity instanceof Player player) {
-			List<ItemStack> lanterns = ToolPouchUtil.getItemsFromToolPouch(
-					player, stack -> stack.is(ItemTags.LANTERNS)
-			);
+			List<ItemStack> lanterns = ToolPouchUtil.getItemsFromToolPouch(player, ClientUtil.getSupportedLanterns());
 			ItemStack lantern = lanterns.isEmpty() ? ItemStack.EMPTY : lanterns.getFirst();
 			blockModelResolver.update(
 					((AvatarRenderStateExtension) state).toolpouch$getLantern(),

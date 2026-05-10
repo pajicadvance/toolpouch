@@ -19,7 +19,7 @@ public class ToolPouchScreen extends AbstractContainerScreen<ToolPouchMenu> {
 	private final int columns;
 
 	public ToolPouchScreen(ToolPouchMenu menu, Inventory playerInventory, Component ignored) {
-		super(menu, playerInventory, menu.getToolPouch().getHoverName(), menu.getWidth(ToolPouchUtil.getToolPouchRows(menu.getToolPouch())), menu.getHeight(ToolPouchUtil.getToolPouchColumns(menu.getToolPouch())));
+		super(menu, playerInventory, menu.getToolPouch().getHoverName(), menu.getWidth(ToolPouchUtil.getToolPouchColumns(menu.getToolPouch())), menu.getHeight(ToolPouchUtil.getToolPouchRows(menu.getToolPouch())));
 		rows = ToolPouchUtil.getToolPouchRows(menu.getToolPouch());
 		columns = ToolPouchUtil.getToolPouchColumns(menu.getToolPouch());
 		titleLabelY = 6;
