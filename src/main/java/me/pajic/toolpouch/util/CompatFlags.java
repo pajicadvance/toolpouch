@@ -9,4 +9,5 @@ public class CompatFlags {
 	public static final boolean SEASONS_LOADED = ToolPouch.xplat().isModLoaded("sereneseasons");
 	public static final boolean TRINKETS_LOADED = ToolPouch.xplat().isModLoaded("trinkets_updated");
 	public static final boolean OHMEGA_LOADED = ToolPouch.xplat().isModLoaded("ohmega");
+	public static final boolean ZOOMIFY_LOADED = ToolPouch.xplat().isModLoaded("zoomify");
 }

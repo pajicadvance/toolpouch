@@ -63,20 +63,22 @@ public class ModKeybinds {
     public static void onClientTick(Minecraft client) {
 		LocalPlayer player = client.player;
 		if (player != null && client.level != null) {
-			if (USE_SPYGLASS.isDown() && ToolPouchUtil.toolPouchHasItem(player, stack -> stack.is(Items.SPYGLASS))) {
-				if (!soundPlayed) {
-					player.playSound(SoundEvents.SPYGLASS_USE);
-					ToolPouch.xplat().sendToServer(new ModPayloads.C2SPlaySoundPayload(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SPYGLASS_USE)));
-					soundPlayed = true;
+			if (!CompatFlags.ZOOMIFY_LOADED) {
+				if (USE_SPYGLASS.isDown() && ToolPouchUtil.toolPouchHasItem(player, stack -> stack.is(Items.SPYGLASS))) {
+					if (!soundPlayed) {
+						player.playSound(SoundEvents.SPYGLASS_USE);
+						ToolPouch.xplat().sendToServer(new ModPayloads.C2SPlaySoundPayload(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SPYGLASS_USE)));
+						soundPlayed = true;
+					}
+					ClientUtil.shouldScope = true;
+				} else {
+					if (soundPlayed) {
+						player.playSound(SoundEvents.SPYGLASS_STOP_USING);
+						ToolPouch.xplat().sendToServer(new ModPayloads.C2SPlaySoundPayload(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SPYGLASS_STOP_USING)));
+						soundPlayed = false;
+					}
+					ClientUtil.shouldScope = false;
 				}
-				ClientUtil.shouldScope = true;
-			} else {
-				if (soundPlayed) {
-					player.playSound(SoundEvents.SPYGLASS_STOP_USING);
-					ToolPouch.xplat().sendToServer(new ModPayloads.C2SPlaySoundPayload(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.SPYGLASS_STOP_USING)));
-					soundPlayed = false;
-				}
-				ClientUtil.shouldScope = false;
 			}
 			boolean isShulkerWidget = !GameplayUtil.isHoldingProjectileWeapon(player);
 			if (!ToolPouchClient.CONFIG.quickSelect.get()) {

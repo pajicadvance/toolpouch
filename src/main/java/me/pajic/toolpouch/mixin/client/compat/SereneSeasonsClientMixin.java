@@ -1,12 +1,14 @@
-package me.pajic.toolpouch.mixin.compat;
+package me.pajic.toolpouch.mixin.client.compat;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.moulberry.mixinconstraints.annotations.IfModLoaded;
+import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import me.pajic.toolpouch.ToolPouch;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import sereneseasons.init.ModClient;
 
+@MixinEnvironment(type = MixinEnvironment.Env.CLIENT)
 @IfModLoaded("sereneseasons")
 @Mixin(ModClient.class)
 public class SereneSeasonsClientMixin {

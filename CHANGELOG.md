@@ -1,1 +1,3 @@
-- Fixed the "Inventory" label being displayed at an incorrect spot in the tool pouch screen when the amount of rows and columns isn't identical.
+- Added Zoomify integration:
+  - When "Zoom Behavior" is set to "Allow while carrying" in the Zoomify config, Zoomify will check tool pouches from Tool Pouch for a spyglass to use.
+  - Zoom features from Tool Pouch will be disabled if Zoomify is installed.

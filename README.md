@@ -104,6 +104,7 @@ By default, there is no limit on how many fireworks can be stored inside the Too
 - [Locator Lodestones](https://modrinth.com/mod/locator_lodestones): Lodestone compasses stored in the tool pouch will show up on the locator bar.
 - [Improved Maps](https://modrinth.com/mod/improved-maps): The first map atlas stored in the tool pouch will show its currently active map in the minimap overlay.
 - [Serene Seasons](https://modrinth.com/mod/serene-seasons): Storing a calendar in the tool pouch will show the current season in the info overlay. There's also an optional setting to disable the calendar item tooltip so that the season can only be read from the tool pouch info overlay.
+- [Zoomify](https://modrinth.com/mod/zoomify): When "Zoom Behavior" is set to "Allow while carrying" in the Zoomify config, Zoomify will check tool pouches from Tool Pouch for a spyglass to use. This mod's own zoom features will be disabled.
 
 ## FAQ
 

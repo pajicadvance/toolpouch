@@ -35,6 +35,8 @@ public class GameplayUtil {
 				player.getOffhandItem().getItem() instanceof ProjectileWeaponItem;
 	}
 
+	//? neoforge
+	//@SuppressWarnings("deprecation")
 	public static Predicate<ItemStack> getSupportedAmmo(Player player) {
 		Item mainHand = player.getMainHandItem().getItem();
 		Item offHand = player.getOffhandItem().getItem();
