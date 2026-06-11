@@ -1,2 +1,1 @@
-- Rewrote mod internals to use item stack templates instead of real item stacks where possible, which should improve TPS performance.
-- Mod functionality should stay the same - if you notice any discrepancies, please report them on my Discord server or the issue tracker.
+- Fixed possible NPE crashes.

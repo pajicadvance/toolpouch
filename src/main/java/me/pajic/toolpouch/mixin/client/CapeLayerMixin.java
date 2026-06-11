@@ -29,6 +29,6 @@ public class CapeLayerMixin {
 			@Local(argsOnly = true, name = "state") final AvatarRenderState state
 	) {
 		ItemStackTemplate elytra = ((HumanoidRenderStateExtension) state).toolpouch$getElytra();
-		return original && elytra == null || ItemStackTemplateUtil.isEmpty(elytra);
+		return original && (elytra == null || ItemStackTemplateUtil.isEmpty(elytra));
 	}
 }
