@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.util.ClientUtil;
+import me.pajic.toolpouch.util.ItemStackTemplateUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.Avatar;
@@ -51,7 +52,7 @@ public abstract class PlayerMixin extends Avatar {
 	)
 	private void tickMapsInToolPouch(CallbackInfo ci) {
 		Player self = (Player) (Object) this;
-		ToolPouchUtil.getItemsFromToolPouch(self, stack -> stack.has(DataComponents.MAP_ID))
-				.forEach(map -> map.inventoryTick(level(), self, EquipmentSlot.MAINHAND));
+		ToolPouchUtil.getItemsFromToolPouch(self, stack -> ItemStackTemplateUtil.has(stack, DataComponents.MAP_ID))
+				.forEach(map -> map.create().inventoryTick(level(), self, EquipmentSlot.MAINHAND));
 	}
 }

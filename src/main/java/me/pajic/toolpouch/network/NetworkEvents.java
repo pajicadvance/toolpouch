@@ -21,6 +21,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.PlayerEnderChestContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 
 import java.util.List;
@@ -51,8 +52,8 @@ public class NetworkEvents {
 
 	public static void openShulkerBox(ServerPlayer player, int index) {
 		player.playSound(SoundEvents.SHULKER_BOX_OPEN);
-		ItemStack shulker = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ItemTags.SHULKER_BOXES)).get(index);
-		player.openMenu(new ShulkerBoxContainerMenu(shulker, 27, index));
+		ItemStackTemplate shulker = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ItemTags.SHULKER_BOXES)).get(index);
+		player.openMenu(new ShulkerBoxContainerMenu(shulker.create(), 27, index));
 		player.awardStat(Stats.OPEN_SHULKER_BOX);
 	}
 
@@ -78,11 +79,11 @@ public class NetworkEvents {
 	}
 
 	public static void elytraBoostFromPouch(ServerPlayer player) {
-		List<ItemStack> fireworks = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(Items.FIREWORK_ROCKET));
+		List<ItemStackTemplate> fireworks = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(Items.FIREWORK_ROCKET));
 		if (!fireworks.isEmpty()) {
-			ItemStack firework = fireworks.getFirst();
-			ToolPouchUtil.removeItemFromToolPouch(player, firework, 1);
-			firework.getItem().use(player.level(), player, InteractionHand.OFF_HAND);
+			ItemStackTemplate firework = fireworks.getFirst();
+			ToolPouchUtil.removeItemFromToolPouch(player, firework.item().value(), 1);
+			firework.item().value().use(player.level(), player, InteractionHand.OFF_HAND);
 		}
 	}
 }

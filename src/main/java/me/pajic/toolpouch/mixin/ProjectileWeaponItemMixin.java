@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,8 +29,8 @@ public class ProjectileWeaponItemMixin {
     private static ItemStack getAmmoFromToolPouch(ItemStack original, @Local(argsOnly = true, name = "entity") LivingEntity entity) {
         if (entity instanceof Player player && original.isEmpty()) {
 			int slot = ((PlayerExtension) player).toolpouch$getArrowSlot();
-			List<ItemStack> ammo = ToolPouchUtil.getItemsFromToolPouch(player, GameplayUtil.getSupportedAmmo(player));
-			if (!ammo.isEmpty()) return ammo.get(slot);
+			List<ItemStackTemplate> ammo = ToolPouchUtil.getItemsFromToolPouch(player, GameplayUtil.getSupportedAmmo(player));
+			if (!ammo.isEmpty()) return ammo.get(slot).create();
         }
         return original;
     }
@@ -47,11 +48,11 @@ public class ProjectileWeaponItemMixin {
 			int i = !forceInfinite && !player.hasInfiniteMaterials() && player.level() instanceof ServerLevel serverLevel ?
 					EnchantmentHelper.processAmmoUse(serverLevel, weapon, projectile, 1) : 0;
 			int slot = ((PlayerExtension) player).toolpouch$getArrowSlot();
-			List<ItemStack> ammo = ToolPouchUtil.getItemsFromToolPouch(player, GameplayUtil.getSupportedAmmo(player));
+			List<ItemStackTemplate> ammo = ToolPouchUtil.getItemsFromToolPouch(player, GameplayUtil.getSupportedAmmo(player));
 			if (!ammo.isEmpty()) {
-				ItemStack arrow = ammo.get(slot);
-				ToolPouchUtil.removeItemFromToolPouch(player, arrow, i);
-				return original.call(weapon, ammo.get(slot), player, forceInfinite);
+				ItemStackTemplate arrow = ammo.get(slot);
+				ToolPouchUtil.removeItemFromToolPouch(player, arrow.item().value(), i);
+				return original.call(weapon, ammo.get(slot).create(), player, forceInfinite);
 			}
 		}
         return original.call(weapon, projectile, holder, forceInfinite);

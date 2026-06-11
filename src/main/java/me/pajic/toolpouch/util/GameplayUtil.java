@@ -11,6 +11,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.GameType;
@@ -37,11 +38,11 @@ public class GameplayUtil {
 
 	//? neoforge
 	//@SuppressWarnings("deprecation")
-	public static Predicate<ItemStack> getSupportedAmmo(Player player) {
+	public static Predicate<ItemStackTemplate> getSupportedAmmo(Player player) {
 		Item mainHand = player.getMainHandItem().getItem();
 		Item offHand = player.getOffhandItem().getItem();
-		if (mainHand instanceof ProjectileWeaponItem pwi) return pwi.getSupportedHeldProjectiles();
-		if (offHand instanceof ProjectileWeaponItem pwi) return pwi.getSupportedHeldProjectiles();
+		if (mainHand instanceof ProjectileWeaponItem pwi) return itemStackTemplate -> pwi.getSupportedHeldProjectiles().test(itemStackTemplate.create());
+		if (offHand instanceof ProjectileWeaponItem pwi) return itemStackTemplate -> pwi.getSupportedHeldProjectiles().test(itemStackTemplate.create());
 		return _ -> false;
 	}
 
@@ -64,4 +65,5 @@ public class GameplayUtil {
 		}
 		else return new ObjectBooleanImmutablePair<>(Optional.empty(), stack.is(BuiltInRegistries.ITEM.getValue(Identifier.tryParse(s))));
 	}
+
 }

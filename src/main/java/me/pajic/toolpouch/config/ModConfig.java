@@ -50,6 +50,7 @@ public class ModConfig extends Config {
 	public ValidatedBoolean canOpenFromInventory = new ValidatedBoolean(true);
 	public ValidatedBoolean canOpenWithRightClick = new ValidatedBoolean(true);
 	public ValidatedBoolean canAttachToLeggings = new ValidatedBoolean(true);
+	public ValidatedBoolean allowUseFromInventory = new ValidatedBoolean(true);
 	public ValidatedBoolean preventUnequipWhenNotEmpty = new ValidatedBoolean(false);
 	public ValidatedBoolean equippableItemTooltip = new ValidatedBoolean(true);
 	public ValidatedSet<AllowedItem> allowedItems = allowedItem.toSet(

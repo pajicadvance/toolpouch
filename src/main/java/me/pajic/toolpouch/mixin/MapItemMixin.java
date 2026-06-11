@@ -1,5 +1,6 @@
 package me.pajic.toolpouch.mixin;
 
+import me.pajic.toolpouch.util.ItemStackTemplateUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.protocol.Packet;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.maps.MapId;
@@ -34,9 +36,9 @@ public abstract class MapItemMixin {
 	)
 	private void updateMapsInToolPouch(ItemStack itemStack, ServerLevel level, Entity owner, EquipmentSlot slot, CallbackInfo ci) {
 		if (owner instanceof Player player) {
-			List<ItemStack> maps = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.has(DataComponents.MAP_ID));
+			List<ItemStackTemplate> maps = ToolPouchUtil.getItemsFromToolPouch(player, stack -> ItemStackTemplateUtil.has(stack, DataComponents.MAP_ID));
 			if (!maps.isEmpty()) {
-				ItemStack map = maps.getFirst();
+				ItemStackTemplate map = maps.getFirst();
 				MapId mapId = map.get(DataComponents.MAP_ID);
 				MapItemSavedData mapData = MapItem.getSavedData(map.get(DataComponents.MAP_ID), level);
 				update(level, owner, mapData);

@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
@@ -31,9 +31,9 @@ public class MinimapOverlay {
 				minimapOn && MC.player != null && MC.level != null && !MC.options.hideGui &&
 				!Minecraft.getInstance().gui.getDebugOverlay().showDebugScreen()
 		) {
-			List<ItemStack> maps = ToolPouchUtil.getItemsFromToolPouch(MC.player, stack -> stack.has(DataComponents.MAP_ID));
+			List<ItemStackTemplate> maps = ToolPouchUtil.getItemsFromToolPouch(MC.player, stack -> stack.get(DataComponents.MAP_ID) != null);
 			if (!maps.isEmpty()) {
-				ItemStack map = maps.getFirst();
+				ItemStackTemplate map = maps.getFirst();
 				MapId mapId = map.get(DataComponents.MAP_ID);
 				MapItemSavedData mapData = MapItem.getSavedData(map.get(DataComponents.MAP_ID), MC.level);
 				if (mapData != null) {

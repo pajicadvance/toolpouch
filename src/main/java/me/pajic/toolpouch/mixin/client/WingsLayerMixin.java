@@ -4,9 +4,11 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import me.pajic.toolpouch.renderer.HumanoidRenderStateExtension;
+import me.pajic.toolpouch.util.ItemStackTemplateUtil;
 import net.minecraft.client.renderer.entity.layers.WingsLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,8 +29,8 @@ public class WingsLayerMixin {
 			ItemStack original,
 			@Local(argsOnly = true, name = "state") HumanoidRenderState state
 	) {
-		ItemStack toolPouchElytra = ((HumanoidRenderStateExtension) state).toolpouch$getElytra();
-		if (!toolPouchElytra.isEmpty()) return toolPouchElytra;
+		ItemStackTemplate toolPouchElytra = ((HumanoidRenderStateExtension) state).toolpouch$getElytra();
+		if (toolPouchElytra != null && !ItemStackTemplateUtil.isEmpty(toolPouchElytra)) return toolPouchElytra.create();
 		return original;
 	}
 }

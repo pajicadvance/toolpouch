@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -51,11 +51,11 @@ public abstract class AvatarRendererMixin<T1 extends Avatar & ClientAvatarEntity
 			T2 entity, AvatarRenderState state, float partialTicks, CallbackInfo ci
 	) {
 		if (entity instanceof Player player) {
-			List<ItemStack> lanterns = ToolPouchUtil.getItemsFromToolPouch(player, ClientUtil.getSupportedLanterns());
-			ItemStack lantern = lanterns.isEmpty() ? ItemStack.EMPTY : lanterns.getFirst();
-			blockModelResolver.update(
+			List<ItemStackTemplate> lanterns = ToolPouchUtil.getItemsFromToolPouch(player, ClientUtil.getSupportedLanterns());
+			ItemStackTemplate lantern = lanterns.isEmpty() ? null : lanterns.getFirst();
+			if (lantern != null) blockModelResolver.update(
 					((AvatarRenderStateExtension) state).toolpouch$getLantern(),
-					Block.byItem(lantern.getItem()).defaultBlockState(),
+					Block.byItem(lantern.item().value()).defaultBlockState(),
 					BlockDisplayContext.create()
 			);
 		}

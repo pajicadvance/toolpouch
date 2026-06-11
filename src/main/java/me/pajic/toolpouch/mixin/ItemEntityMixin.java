@@ -12,6 +12,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,8 +43,8 @@ public abstract class ItemEntityMixin extends Entity {
 			Operation<Boolean> original,
 			@Local(argsOnly = true, name = "player") Player player
     ) {
-		Predicate<ItemStack> ammo = GameplayUtil.getSupportedAmmo(player);
-        if (ammo.test(itemStack)) {
+		Predicate<ItemStackTemplate> ammo = GameplayUtil.getSupportedAmmo(player);
+        if (ammo.test(ItemStackTemplate.fromNonEmptyStack(itemStack))) {
 			if (ToolPouchUtil.toolPouchHasItem(player, ammo)) {
 				ItemEntity itemEntity = (ItemEntity) (Object) this;
 				int i = itemStack.getCount();

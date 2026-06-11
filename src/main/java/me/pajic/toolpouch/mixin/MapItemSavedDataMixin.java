@@ -30,7 +30,7 @@ public class MapItemSavedDataMixin {
 			@Local(name = "mapMatcher") Predicate<ItemStack> mapMatcher
 	) {
 		return original || ToolPouchUtil.toolPouchHasItem(tickingPlayer, itemStack ->
-				mapMatcher.test(itemStack) || itemStack.is(ResourceKey.create(Registries.ITEM, Identifier.parse("improved-maps:atlas")))
+				mapMatcher.test(itemStack.create()) || itemStack.is(ResourceKey.create(Registries.ITEM, Identifier.parse("improved-maps:atlas")))
 		);
 	}
 }

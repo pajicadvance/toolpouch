@@ -9,11 +9,13 @@ import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.moulberry.mixinconstraints.annotations.IfModLoaded;
+import me.pajic.toolpouch.util.ItemStackTemplateUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,8 +43,8 @@ public class ImprovedMapsLifecycleEventsMixin {
 			)
 	)
 	private static void tickPouchAtlases(MinecraftServer server, CallbackInfo ci, @Local(name = "player") ServerPlayer player) {
-		List<ItemStack> atlases = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ImprovedMapsItems.ATLAS));
-		for (ItemStack atlas : atlases) AtlasPlayerHandTick(player, atlas, EquipmentSlot.MAINHAND);
+		List<ItemStackTemplate> atlases = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ImprovedMapsItems.ATLAS));
+		for (ItemStackTemplate atlas : atlases) AtlasPlayerHandTick(player, atlas.create(), EquipmentSlot.MAINHAND);
 	}
 
 	@Inject(
@@ -60,12 +62,12 @@ public class ImprovedMapsLifecycleEventsMixin {
 			@Share("same") LocalBooleanRef same,
 			@Share("pouchAtlas") LocalRef<ItemStack> pouchAtlas
 	) {
-		Optional<ItemStack> opt = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ImprovedMapsItems.ATLAS)).stream().findFirst();
+		Optional<ItemStackTemplate> opt = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(ImprovedMapsItems.ATLAS)).stream().findFirst();
 		if (opt.isPresent()) {
-			ItemStack stack = opt.get();
-			if (ItemStack.isSameItemSameComponents(stack, atlas)) {
+			ItemStackTemplate stack = opt.get();
+			if (ItemStackTemplateUtil.isSameItemSameComponents(stack, ItemStackTemplate.fromNonEmptyStack(atlas))) {
 				same.set(true);
-				pouchAtlas.set(stack);
+				pouchAtlas.set(stack.create());
 				return;
 			}
 		}

@@ -7,6 +7,7 @@ import me.pajic.toolpouch.keybind.ScrollHandler;
 import me.pajic.toolpouch.network.ModPayloads;
 import me.pajic.toolpouch.renderer.WidgetRenderer;
 import me.pajic.toolpouch.util.GameplayUtil;
+import me.pajic.toolpouch.util.ItemStackTemplateUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -19,6 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import java.util.List;
 
@@ -30,24 +32,24 @@ public class ContextualSelectionWidget {
     public static void render(GuiGraphicsExtractor guiGraphics) {
         if (MC.player != null && MC.level != null) {
 			if (GameplayUtil.isHoldingProjectileWeapon(MC.player)) {
-				List<ItemStack> ammo = ToolPouchUtil.getItemsFromToolPouch(MC.player, GameplayUtil.getSupportedAmmo(MC.player));
+				List<ItemStackTemplate> ammo = ToolPouchUtil.getItemsFromToolPouch(MC.player, GameplayUtil.getSupportedAmmo(MC.player));
 				if (!ammo.isEmpty()) {
 					int count = ammo.size();
 					if (ScrollHandler.selectedArrowSlot >= count) ScrollHandler.selectedArrowSlot = 0;
-					if (ammo.get(ScrollHandler.selectedArrowSlot).isEmpty()) {
+					if (ItemStackTemplateUtil.isEmpty(ammo.get(ScrollHandler.selectedArrowSlot))) {
 						do {
 							ScrollHandler.selectedArrowSlot++;
 							if (ScrollHandler.selectedArrowSlot >= count) {
 								ScrollHandler.selectedArrowSlot = 0;
 							}
-						} while (ammo.get(ScrollHandler.selectedArrowSlot).isEmpty());
+						} while (ItemStackTemplateUtil.isEmpty(ammo.get(ScrollHandler.selectedArrowSlot)));
 						ToolPouch.xplat().sendToServer(new ModPayloads.C2SSyncArrowSlot(ScrollHandler.selectedArrowSlot));
 					}
 					if (widgetOpen || (ToolPouchClient.CONFIG.quickSelect.get() && !MC.player.isUsingItem() && !MC.options.hideGui && ModKeybinds.OPEN_WIDGET.isDown())) {
 						if (ToolPouchClient.CONFIG.quickSelect.get()) widgetOpen = true;
 						WidgetRenderer.renderCenterSlot(MC, guiGraphics);
 						for (int i = 0; i < count; i++) {
-							ItemStack arrow = ammo.get(i);
+							ItemStack arrow = ammo.get(i).create();
 							if (!arrow.isEmpty()) {
 								WidgetRenderer.renderItemStack(
 										MC, guiGraphics, arrow,
@@ -71,17 +73,17 @@ public class ContextualSelectionWidget {
 					}
 				}
 			} else {
-				List<ItemStack> shulkers = ToolPouchUtil.getItemsFromToolPouch(MC.player, stack -> stack.is(ItemTags.SHULKER_BOXES));
+				List<ItemStackTemplate> shulkers = ToolPouchUtil.getItemsFromToolPouch(MC.player, stack -> stack.is(ItemTags.SHULKER_BOXES));
 				if (!shulkers.isEmpty()) {
 					int count = shulkers.size();
 					if (ScrollHandler.selectedShulkerSlot >= count) ScrollHandler.selectedShulkerSlot = 0;
-					if (shulkers.get(ScrollHandler.selectedShulkerSlot).isEmpty()) {
+					if (ItemStackTemplateUtil.isEmpty(shulkers.get(ScrollHandler.selectedShulkerSlot))) {
 						do {
 							ScrollHandler.selectedShulkerSlot++;
 							if (ScrollHandler.selectedShulkerSlot >= count) {
 								ScrollHandler.selectedShulkerSlot = 0;
 							}
-						} while (shulkers.get(ScrollHandler.selectedShulkerSlot).isEmpty());
+						} while (ItemStackTemplateUtil.isEmpty(shulkers.get(ScrollHandler.selectedShulkerSlot)));
 						ToolPouch.xplat().sendToServer(new ModPayloads.C2SSyncShulkerSlot(ScrollHandler.selectedShulkerSlot));
 					}
 					if (widgetOpen || (ToolPouchClient.CONFIG.quickSelect.get() && !MC.options.hideGui && ModKeybinds.OPEN_WIDGET.isDown())) {
@@ -94,7 +96,7 @@ public class ContextualSelectionWidget {
 							if (ToolPouchClient.CONFIG.quickSelect.get()) widgetOpen = true;
 							WidgetRenderer.renderCenterSlot(MC, guiGraphics);
 							for (int i = 0; i < count; i++) {
-								ItemStack shulker = shulkers.get(i);
+								ItemStack shulker = shulkers.get(i).create();
 								if (!shulker.isEmpty()) WidgetRenderer.renderItemStack(
 										MC, guiGraphics, shulker,
 										i - ScrollHandler.selectedShulkerSlot
@@ -120,7 +122,7 @@ public class ContextualSelectionWidget {
 								WidgetRenderer.renderCenterText(MC, exitHint, guiGraphics, 36);
 							}
 							if (MC.player.isShiftKeyDown()) {
-								ItemStack stack = shulkers.get(ScrollHandler.selectedShulkerSlot);
+								ItemStack stack = shulkers.get(ScrollHandler.selectedShulkerSlot).create();
 								List<ClientTooltipComponent> list = Screen.getTooltipFromItem(MC, stack).stream()
 										.map(Component::getVisualOrderText)
 										.map(ClientTooltipComponent::create)

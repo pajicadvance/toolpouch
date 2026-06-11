@@ -1,3 +1,2 @@
-- Added Zoomify integration:
-  - When "Zoom Behavior" is set to "Allow while carrying" in the Zoomify config, Zoomify will check tool pouches from Tool Pouch for a spyglass to use.
-  - Zoom features from Tool Pouch will be disabled if Zoomify is installed.
+- Rewrote mod internals to use item stack templates instead of real item stacks where possible, which should improve TPS performance.
+- Mod functionality should stay the same - if you notice any discrepancies, please report them on my Discord server or the issue tracker.

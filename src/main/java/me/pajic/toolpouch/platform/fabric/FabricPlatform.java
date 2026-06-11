@@ -55,17 +55,17 @@ public class FabricPlatform implements Platform {
 	public InteractionResult openToolPouchScreen(Player player, ItemStack toolPouch) {
 		if (!player.level().isClientSide()) {
 			player.openMenu(new ExtendedMenuProvider<ModPayloads.S2CToolPouchScreenPayload>() {
-				@Override
-				public @NotNull AbstractContainerMenu createMenu(int i, @NotNull Inventory inventory, @NotNull Player player) {
+				@Override @NotNull
+				public AbstractContainerMenu createMenu(int i, @NotNull Inventory inventory, @NotNull Player player) {
 					return new ToolPouchMenu(i, inventory, toolPouch);
 				}
 
-				@Override
-				public @NotNull Component getDisplayName() {
+				@Override @NotNull
+				public Component getDisplayName() {
 					return toolPouch.getDisplayName();
 				}
 
-				@Override
+				@Override @NotNull
 				public ModPayloads.S2CToolPouchScreenPayload getScreenOpeningData(@NonNull ServerPlayer serverPlayer) {
 					return new ModPayloads.S2CToolPouchScreenPayload(toolPouch);
 				}

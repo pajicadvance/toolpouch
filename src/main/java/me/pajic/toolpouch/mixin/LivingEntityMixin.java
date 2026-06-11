@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import me.pajic.toolpouch.util.ClientUtil;
+import me.pajic.toolpouch.util.ItemStackTemplateUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.Entity;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -51,7 +53,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private void useElytraFromToolPouch(CallbackInfo ci) {
 		if (
 				(LivingEntity) (Object) this instanceof Player player &&
-				ToolPouchUtil.toolPouchHasItem(player, stack -> stack.has(DataComponents.GLIDER))
+				ToolPouchUtil.toolPouchHasItem(player, stack -> ItemStackTemplateUtil.has(stack, DataComponents.GLIDER))
 		) {
 			ToolPouchUtil.updateElytraInToolPouch(player);
 			gameEvent(GameEvent.ELYTRA_GLIDE);
@@ -71,8 +73,8 @@ public abstract class LivingEntityMixin extends Entity {
 	)
 	private boolean useElytraFromToolPouch(boolean original) {
 		if ((LivingEntity) (Object) this instanceof Player player) {
-			ItemStack elytra = ToolPouchUtil.getElytraFromToolPouch(player, false);
-			if (!elytra.isEmpty()) return true;
+			ItemStackTemplate elytra = ToolPouchUtil.getElytraFromToolPouch(player, false);
+			if (elytra != null && !ItemStackTemplateUtil.isEmpty(elytra)) return true;
 		}
 		return original;
 	}
@@ -86,13 +88,13 @@ public abstract class LivingEntityMixin extends Entity {
 	)
 	private ItemStack useTotemFromToolPouch(ItemStack original) {
 		if ((LivingEntity) (Object) this instanceof Player player) {
-			List<ItemStack> totems = ToolPouchUtil.getItemsFromToolPouch(player, stack ->
-					stack.has(DataComponents.DEATH_PROTECTION)
+			List<ItemStackTemplate> totems = ToolPouchUtil.getItemsFromToolPouch(player, stack ->
+					ItemStackTemplateUtil.has(stack, DataComponents.DEATH_PROTECTION)
 			);
 			if (!totems.isEmpty()) {
-				ItemStack totem = totems.getFirst();
-				ToolPouchUtil.removeItemFromToolPouch(player, totem, 1);
-				return totems.getFirst();
+				ItemStackTemplate totem = totems.getFirst();
+				ToolPouchUtil.removeItemFromToolPouch(player, totem.item().value(), 1);
+				return totems.getFirst().create();
 			}
 		}
 		return original;

@@ -4,8 +4,10 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import me.pajic.toolpouch.renderer.HumanoidRenderStateExtension;
+import me.pajic.toolpouch.util.ItemStackTemplateUtil;
 import net.minecraft.client.renderer.entity.layers.CapeLayer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,6 +28,7 @@ public class CapeLayerMixin {
 			boolean original,
 			@Local(argsOnly = true, name = "state") final AvatarRenderState state
 	) {
-		return original && ((HumanoidRenderStateExtension) state).toolpouch$getElytra().isEmpty();
+		ItemStackTemplate elytra = ((HumanoidRenderStateExtension) state).toolpouch$getElytra();
+		return original && elytra == null || ItemStackTemplateUtil.isEmpty(elytra);
 	}
 }

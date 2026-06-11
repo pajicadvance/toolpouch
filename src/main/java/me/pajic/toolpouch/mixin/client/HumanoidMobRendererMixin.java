@@ -2,13 +2,14 @@ package me.pajic.toolpouch.mixin.client;
 
 import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import me.pajic.toolpouch.renderer.HumanoidRenderStateExtension;
+import me.pajic.toolpouch.util.ItemStackTemplateUtil;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,8 +31,8 @@ public class HumanoidMobRendererMixin {
 			CallbackInfo ci
 	) {
 		if (entity instanceof Player player) {
-			ItemStack elytra = ToolPouchUtil.getElytraFromToolPouch(player, true);
-			if (!elytra.isEmpty()) ((HumanoidRenderStateExtension) state).toolpouch$setElytra(elytra);
+			ItemStackTemplate elytra = ToolPouchUtil.getElytraFromToolPouch(player, true);
+			if (elytra != null && !ItemStackTemplateUtil.isEmpty(elytra)) ((HumanoidRenderStateExtension) state).toolpouch$setElytra(elytra);
 		}
 	}
 }

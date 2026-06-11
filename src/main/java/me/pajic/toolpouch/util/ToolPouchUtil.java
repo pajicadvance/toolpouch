@@ -11,7 +11,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.component.ItemContainerContents;
 
 import java.util.ArrayList;
@@ -22,12 +24,12 @@ public class ToolPouchUtil {
 
 	public static final List<String> ITEM_SUGGESTIONS = new ArrayList<>();
 
-	public static boolean toolPouchHasItem(Player player, Predicate<ItemStack> predicate) {
-		return getToolPouchContents(player).allItemsCopyStream().anyMatch(predicate);
+	public static boolean toolPouchHasItem(Player player, Predicate<ItemStackTemplate> predicate) {
+		return getToolPouchContents(player).nonEmptyItemsStream().anyMatch(predicate);
 	}
 
-	public static List<ItemStack> getItemsFromToolPouch(Player player, Predicate<ItemStack> predicate) {
-		return getToolPouchContents(player).allItemsCopyStream().filter(predicate).toList();
+	public static List<ItemStackTemplate> getItemsFromToolPouch(Player player, Predicate<ItemStackTemplate> predicate) {
+		return getToolPouchContents(player).nonEmptyItemsStream().filter(predicate).toList();
 	}
 
 	public static ItemStack addItemToToolPouch(Player player, ItemStack stack) {
@@ -41,11 +43,11 @@ public class ToolPouchUtil {
 		return remainder;
 	}
 
-	public static void removeItemFromToolPouch(Player player, ItemStack stack, int amount) {
+	public static void removeItemFromToolPouch(Player player, Item item, int amount) {
 		if (!player.hasInfiniteMaterials()) {
 			ItemStack toolPouch = getToolPouch(player);
 			SimpleContainer container = makeContainer(toolPouch);
-			container.removeItemType(stack.getItem(), amount);
+			container.removeItemType(item, amount);
 			toolPouch.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(container.getItems()));
 		}
 	}
@@ -63,8 +65,9 @@ public class ToolPouchUtil {
 
 	public static void updateElytraInToolPouch(Player player) {
 		if (!player.hasInfiniteMaterials()) {
-			ItemStack elytra = getElytraFromToolPouch(player, false);
-			if (!elytra.isEmpty()) {
+			ItemStackTemplate elytraTemplate = getElytraFromToolPouch(player, false);
+			if (elytraTemplate != null && !ItemStackTemplateUtil.isEmpty(elytraTemplate)) {
+				ItemStack elytra = elytraTemplate.create();
 				elytra.setDamageValue(elytra.getDamageValue() + 1);
 				ItemStack toolPouch = getToolPouch(player);
 				SimpleContainer container = makeContainer(toolPouch);
@@ -78,14 +81,14 @@ public class ToolPouchUtil {
 		}
 	}
 
-	public static ItemStack getElytraFromToolPouch(Player player, boolean allowBroken) {
-		List<ItemStack> elytras = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.has(DataComponents.GLIDER));
+	public static ItemStackTemplate getElytraFromToolPouch(Player player, boolean allowBroken) {
+		List<ItemStackTemplate> elytras = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.get(DataComponents.GLIDER) != null);
 		if (!elytras.isEmpty()) {
-			for (ItemStack stack : elytras) {
-				if (allowBroken || !stack.nextDamageWillBreak()) return stack;
+			for (ItemStackTemplate stack : elytras) {
+				if (allowBroken || !ItemStackTemplateUtil.nextDamageWillBreak(stack)) return stack;
 			}
 		}
-		return ItemStack.EMPTY;
+		return null;
 	}
 
 	@SuppressWarnings({"DataFlowIssue"})
@@ -141,8 +144,9 @@ public class ToolPouchUtil {
 		if (CompatFlags.OHMEGA_LOADED) pouch = OhmegaCompat.tryGetOhmegaToolPouch(player);
 		if (!pouch.isEmpty()) return pouch;
 		pouch = player.getItemBySlot(EquipmentSlot.LEGS);
-		return GameplayUtil.isValidContainerHolder(pouch) ? pouch : player.getInventory().getNonEquipmentItems()
+		return GameplayUtil.isValidContainerHolder(pouch) ? pouch : ToolPouch.CONFIG.allowUseFromInventory.get() ?
+				player.getInventory().getNonEquipmentItems()
 				.stream().filter(stack -> stack.is(GameplayUtil.TOOL_POUCHES))
-				.findFirst().orElse(ItemStack.EMPTY);
+				.findFirst().orElse(ItemStack.EMPTY) : ItemStack.EMPTY;
 	}
 }

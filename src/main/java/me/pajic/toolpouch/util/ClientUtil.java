@@ -3,7 +3,7 @@ package me.pajic.toolpouch.util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LanternBlock;
 
@@ -20,7 +20,7 @@ public class ClientUtil {
 		BuiltInRegistries.ITEM.listTagIds().forEach(tag -> ToolPouchUtil.ITEM_SUGGESTIONS.add("#" + tag.location()));
 	}
 
-	public static Predicate<ItemStack> getSupportedLanterns() {
-		return stack -> stack.is(ItemTags.LANTERNS) || Block.byItem(stack.getItem()) instanceof LanternBlock;
+	public static Predicate<ItemStackTemplate> getSupportedLanterns() {
+		return stack -> stack.is(ItemTags.LANTERNS) || Block.byItem(stack.item().value()) instanceof LanternBlock;
 	}
 }
