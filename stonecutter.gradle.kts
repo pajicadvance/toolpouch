@@ -40,4 +40,14 @@ stonecutter parameters {
 	swaps["mod_group"] = "\"" + property("mod.group") + "\";"
 	swaps["minecraft"] = "\"" + node.metadata.version + "\";"
 	constants["release"] = property("mod.id") != "modtemplate"
+
+	replacements {
+		filters.exclude("**/*.accesswidener", "**/*.cfg")
+		string(current.parsed > "26.1.2") {
+			replace("ItemTags.LANTERNS", "BlockItemTags.LANTERNS.item()")
+			replace("MC.options.hideGui", "MC.gui.hud.isHidden()")
+			replace("MC.gui.getDebugOverlay().showDebugScreen()", "MC.gui.hud.getDebugOverlay().showDebugScreen()")
+			replace("MC.gameRenderer.getGameRenderState()", "MC.gameRenderer.gameRenderState()")
+		}
+	}
 }

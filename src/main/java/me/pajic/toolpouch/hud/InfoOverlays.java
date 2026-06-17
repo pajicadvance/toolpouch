@@ -34,10 +34,7 @@ public class InfoOverlays {
 	private static final int WHITE = 0xffffffff;
 
     public static void render(GuiGraphicsExtractor guiGraphics) {
-        if (
-                !CompatFlags.IMMERSIVE_OVERLAYS_LOADED && MC.player != null && MC.level != null && !MC.options.hideGui &&
-				!Minecraft.getInstance().gui.getDebugOverlay().showDebugScreen()
-        ) {
+        if (!CompatFlags.IMMERSIVE_OVERLAYS_LOADED && MC.player != null && MC.level != null && !MC.gui.hud.isHidden() && !MC.gui.hud.getDebugOverlay().showDebugScreen()) {
             boolean shouldObfuscateCompass = ToolPouch.CONFIG.infoOverlaySettings.obfuscateCompassIfNotOverworld.get() && MC.level.dimension() != Level.OVERWORLD;
             boolean shouldObfuscateClock = ToolPouch.CONFIG.infoOverlaySettings.obfuscateClockIfNotOverworld.get() && MC.level.dimension() != Level.OVERWORLD;
             if (ToolPouchUtil.toolPouchHasItem(MC.player, stack -> stack.is(Items.COMPASS))) {
@@ -203,7 +200,7 @@ public class InfoOverlays {
                 full moon is a hollow circle, new moon is a filled circle
                 It doesn't feel right so I shifted them to match the MC moon more -Meep*/
                 MutableComponent moonPhase;
-                switch (MC.gameRenderer.getGameRenderState().levelRenderState.skyRenderState.moonPhase.index()) {
+                switch (MC.gameRenderer.gameRenderState().levelRenderState.skyRenderState.moonPhase.index()) {
                     case 0 -> moonPhase = Component.literal("\uD83C\uDF11 ").append(
                             Component.translatable("gui.toolpouch.full_moon"));
                     case 1 -> moonPhase = Component.literal("\uD83C\uDF18 ").append(

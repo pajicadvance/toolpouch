@@ -27,10 +27,7 @@ public class MinimapOverlay {
 
 	@SuppressWarnings("DataFlowIssue")
 	public static void render(GuiGraphicsExtractor guiGraphics) {
-		if (
-				minimapOn && MC.player != null && MC.level != null && !MC.options.hideGui &&
-				!Minecraft.getInstance().gui.getDebugOverlay().showDebugScreen()
-		) {
+		if (minimapOn && MC.player != null && MC.level != null && !MC.gui.hud.isHidden() && !MC.gui.hud.getDebugOverlay().showDebugScreen()) {
 			List<ItemStackTemplate> maps = ToolPouchUtil.getItemsFromToolPouch(MC.player, stack -> stack.get(DataComponents.MAP_ID) != null);
 			if (!maps.isEmpty()) {
 				ItemStackTemplate map = maps.getFirst();

@@ -4,7 +4,7 @@ import dev.lambdaurora.lambdynlights.api.DynamicLightsContext;
 import dev.lambdaurora.lambdynlights.api.DynamicLightsInitializer;
 import dev.lambdaurora.lambdynlights.api.entity.luminance.EntityLuminance;
 import me.pajic.toolpouch.ToolPouch;
-import net.minecraft.world.entity.EntityType;
+import me.pajic.toolpouch.util.ClientUtil;
 import org.jspecify.annotations.NonNull;
 
 public class PlayerLanternDynamicLighting implements DynamicLightsInitializer {
@@ -17,7 +17,7 @@ public class PlayerLanternDynamicLighting implements DynamicLightsInitializer {
 	@Override
 	public void onInitializeDynamicLights(@NonNull DynamicLightsContext context) {
 		context.entityLightSourceManager().onRegisterEvent().register(registerContext ->
-				registerContext.register(EntityType.PLAYER, PlayerLanternLuminance.INSTANCE)
+				registerContext.register(ClientUtil.PLAYER, PlayerLanternLuminance.INSTANCE)
 		);
 	}
 }

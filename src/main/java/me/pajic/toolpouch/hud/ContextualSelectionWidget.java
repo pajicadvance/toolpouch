@@ -45,7 +45,7 @@ public class ContextualSelectionWidget {
 						} while (ItemStackTemplateUtil.isEmpty(ammo.get(ScrollHandler.selectedArrowSlot)));
 						ToolPouch.xplat().sendToServer(new ModPayloads.C2SSyncArrowSlot(ScrollHandler.selectedArrowSlot));
 					}
-					if (widgetOpen || (ToolPouchClient.CONFIG.quickSelect.get() && !MC.player.isUsingItem() && !MC.options.hideGui && ModKeybinds.OPEN_WIDGET.isDown())) {
+					if (widgetOpen || (ToolPouchClient.CONFIG.quickSelect.get() && !MC.player.isUsingItem() && !MC.gui.hud.isHidden() && ModKeybinds.OPEN_WIDGET.isDown())) {
 						if (ToolPouchClient.CONFIG.quickSelect.get()) widgetOpen = true;
 						WidgetRenderer.renderCenterSlot(MC, guiGraphics);
 						for (int i = 0; i < count; i++) {
@@ -86,7 +86,7 @@ public class ContextualSelectionWidget {
 						} while (ItemStackTemplateUtil.isEmpty(shulkers.get(ScrollHandler.selectedShulkerSlot)));
 						ToolPouch.xplat().sendToServer(new ModPayloads.C2SSyncShulkerSlot(ScrollHandler.selectedShulkerSlot));
 					}
-					if (widgetOpen || (ToolPouchClient.CONFIG.quickSelect.get() && !MC.options.hideGui && ModKeybinds.OPEN_WIDGET.isDown())) {
+					if (widgetOpen || (ToolPouchClient.CONFIG.quickSelect.get() && !MC.gui.hud.isHidden() && ModKeybinds.OPEN_WIDGET.isDown())) {
 						if (count == 1) {
 							MC.player.playSound(SoundEvents.SHULKER_BOX_OPEN);
 							ToolPouch.xplat().sendToServer(new ModPayloads.C2SOpenShulkerBoxPayload(ScrollHandler.selectedShulkerSlot));
