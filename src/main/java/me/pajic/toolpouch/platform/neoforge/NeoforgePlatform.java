@@ -8,7 +8,6 @@ import me.pajic.toolpouch.network.ModPayloads;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
@@ -51,7 +50,7 @@ public class NeoforgePlatform implements Platform {
 
 	@SuppressWarnings("resource")
 	@Override
-	public InteractionResult openToolPouchScreen(Player player, ItemStack toolPouch) {
+	public void openToolPouchScreen(Player player, ItemStack toolPouch) {
 		if (!player.level().isClientSide()) {
 			player.openMenu(
 					new SimpleMenuProvider((containerId, playerInventory, player1) ->
@@ -62,7 +61,6 @@ public class NeoforgePlatform implements Platform {
 					)
 			);
 		}
-		return InteractionResult.PASS;
 	}
 
 	@Override

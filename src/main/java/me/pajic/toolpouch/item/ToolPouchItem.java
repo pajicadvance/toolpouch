@@ -1,6 +1,7 @@
 package me.pajic.toolpouch.item;
 
 import me.pajic.toolpouch.ToolPouch;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -16,8 +17,16 @@ public class ToolPouchItem extends Item {
 
 	@Override
 	public @NotNull InteractionResult use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-		return ToolPouch.CONFIG.canOpenWithRightClick.get() ?
-				ToolPouch.xplat().openToolPouchScreen(player, player.getItemInHand(hand)) :
-				super.use(level, player, hand);
+		if (ToolPouch.CONFIG.canOpenWithRightClick.get()) {
+			player.playSound(SoundEvents.BUNDLE_INSERT);
+			ToolPouch.xplat().openToolPouchScreen(player, player.getItemInHand(hand));
+			return InteractionResult.SUCCESS;
+		}
+		return super.use(level, player, hand);
+	}
+
+	@Override
+	public boolean canFitInsideContainerItems() {
+		return false;
 	}
 }

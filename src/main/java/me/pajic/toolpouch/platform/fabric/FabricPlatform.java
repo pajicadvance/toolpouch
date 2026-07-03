@@ -14,7 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -52,7 +51,7 @@ public class FabricPlatform implements Platform {
 
 	@SuppressWarnings("resource")
 	@Override
-	public InteractionResult openToolPouchScreen(Player player, ItemStack toolPouch) {
+	public void openToolPouchScreen(Player player, ItemStack toolPouch) {
 		if (!player.level().isClientSide()) {
 			player.openMenu(new ExtendedMenuProvider<ModPayloads.S2CToolPouchScreenPayload>() {
 				@Override @NotNull
@@ -70,9 +69,7 @@ public class FabricPlatform implements Platform {
 					return new ModPayloads.S2CToolPouchScreenPayload(toolPouch);
 				}
 			});
-			return InteractionResult.SUCCESS;
 		}
-		return InteractionResult.PASS;
 	}
 
 	@Override

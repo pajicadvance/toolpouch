@@ -1,1 +1,2 @@
-- Fixed possible NPE crashes.
+- Tool pouches can no longer be placed inside container items (bundles, shulkers etc.).
+- Fixed use animation and sound not playing when the tool pouch is opened via right-click.
