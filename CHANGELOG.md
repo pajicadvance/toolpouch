@@ -1,2 +1,3 @@
 - The size of the minimap is now configurable (0.05x-2.0x).
+- Added minimap option "Prevent effect overlay overlap" which automatically moves the minimap down if it's in the top right and the player has active effects.
 - Fixed a bug where the minimap and info overlay were displaying above some screens.
