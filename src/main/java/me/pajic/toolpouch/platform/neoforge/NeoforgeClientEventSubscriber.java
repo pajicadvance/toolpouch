@@ -23,7 +23,7 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.lifecycle.ClientStartedEvent;
-import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;import net.neoforged.neoforge.event.level.LevelEvent;
 
 @EventBusSubscriber(modid = ToolPouch.MOD_ID, value = Dist.CLIENT)
 public class NeoforgeClientEventSubscriber {
@@ -65,7 +65,8 @@ public class NeoforgeClientEventSubscriber {
 
 	@SubscribeEvent
 	private static void initHudLayers(RegisterGuiLayersEvent event) {
-		event.registerAboveAll(
+		event.registerBelow(
+				VanillaGuiLayers.EFFECTS,
 				ToolPouch.id("info_overlay"),
 				(context, _) -> InfoOverlays.render(context)
 		);
@@ -73,7 +74,8 @@ public class NeoforgeClientEventSubscriber {
 				ToolPouch.id("contextual_widget"),
 				(context, _) -> ContextualSelectionWidget.render(context)
 		);
-		event.registerAboveAll(
+		event.registerBelow(
+				VanillaGuiLayers.EFFECTS,
 				ToolPouch.id("minimap_overlay"),
 				(context, _) -> MinimapOverlay.render(context)
 		);

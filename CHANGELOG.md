@@ -1,2 +1,2 @@
-- Tool pouches can no longer be placed inside container items (bundles, shulkers etc.).
-- Fixed use animation and sound not playing when the tool pouch is opened via right-click.
+- The size of the minimap is now configurable (0.05x-2.0x).
+- Fixed a bug where the minimap and info overlay were displaying above some screens.

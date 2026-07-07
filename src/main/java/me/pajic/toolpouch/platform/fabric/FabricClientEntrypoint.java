@@ -22,6 +22,7 @@ import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
@@ -79,7 +80,8 @@ public class FabricClientEntrypoint implements ClientModInitializer {
 	}
 
 	private static void initHudLayers() {
-		HudElementRegistry.addLast(
+		HudElementRegistry.attachElementBefore(
+				VanillaHudElements.MOB_EFFECTS,
 				ToolPouch.id("info_overlay"),
 				(context, tickCounter) -> InfoOverlays.render(context)
 		);
@@ -87,7 +89,8 @@ public class FabricClientEntrypoint implements ClientModInitializer {
 				ToolPouch.id("contextual_widget"),
 				(context, tickCounter) -> ContextualSelectionWidget.render(context)
 		);
-		HudElementRegistry.addLast(
+		HudElementRegistry.attachElementBefore(
+				VanillaHudElements.MOB_EFFECTS,
 				ToolPouch.id("minimap_overlay"),
 				(context, tickCounter) -> MinimapOverlay.render(context)
 		);

@@ -282,11 +282,12 @@ public class InfoOverlays {
     }
 
     private static void renderLines(GuiGraphicsExtractor guiGraphics) {
+		int scaleOffset = Math.round(128 * ToolPouchClient.CONFIG.minimapOverlaySettings.size.get());
 		int offset = switch (ToolPouchClient.CONFIG.minimapOverlaySettings.minimapBackgroundStyle.get()) {
-			case TEXTURE -> 72;
-			case CLEAR -> 68;
-			case NONE -> 64;
-		} + ToolPouchClient.CONFIG.minimapOverlaySettings.offsetY.get();
+			case TEXTURE -> 12;
+			case CLEAR -> 6;
+			case NONE -> 4;
+		} + ToolPouchClient.CONFIG.minimapOverlaySettings.offsetY.get() + scaleOffset;
         int y = MinimapOverlay.minimapActive &&
 				ToolPouchClient.CONFIG.minimapOverlaySettings.position.get() == ToolPouchClient.CONFIG.infoOverlaySettings.position.get() ?
 				6 + offset : 4;

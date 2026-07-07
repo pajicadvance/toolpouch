@@ -41,8 +41,10 @@ public class ModClientConfig extends Config {
 
 	public static class MinimapOverlaySettings extends ConfigSection {
 		public ValidatedEnum<OverlayPosition> position = new ValidatedEnum<>(OverlayPosition.TOP_LEFT);
+		public ValidatedFloat size = new ValidatedFloat(1F, 2F, 0.05F);
 		public ValidatedEnum<MinimapBackground> minimapBackgroundStyle = new ValidatedEnum<>(MinimapBackground.CLEAR);
 		public ValidatedFloat minimapBackgroundOpacity = new ValidatedFloat(0.3F, 1F, 0F);
+		public ValidatedBoolean preventEffectOverlap = new ValidatedBoolean();
 		public ValidatedInt offsetX = new ValidatedInt(0, Integer.MAX_VALUE, 0);
 		public ValidatedInt offsetY = new ValidatedInt(0, Integer.MAX_VALUE, 0);
 	}
