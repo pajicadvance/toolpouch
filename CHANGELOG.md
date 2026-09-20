@@ -1,0 +1,4 @@
+- Added Fabric 26.3 version.
+- Added NeoForge 26.2 version.
+- Added support for "Require item" and "Both" spyglass modes from Ok Zoomer.
+- Added support for Curios API.

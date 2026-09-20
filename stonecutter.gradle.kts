@@ -35,6 +35,13 @@ stonecutter parameters {
 
     replacements {
         filters.exclude("**/*.ct")
+        string(current.parsed > "26.1.2") {
+            replace("ItemTags.LANTERNS", "BlockItemTags.LANTERNS.item()")
+            replace("MC.options.hideGui", "MC.gui.hud.isHidden()")
+            replace("MC.gui.getDebugOverlay().showDebugScreen()", "MC.gui.hud.getDebugOverlay().showDebugScreen()")
+            replace("MC.gameRenderer.getGameRenderState()", "MC.gameRenderer.gameRenderState()")
+            replace("MC.screen", "MC.gui.screen()")
+        }
         string(current.parsed >= "1.21.11") {
             replace("ValidatedIdentifier", "ValidatedIdentifier")
             replace("ResourceLocation", "Identifier")

@@ -23,6 +23,9 @@ repositories {
     strictMaven("https://maven.terraformersmc.com/", "TerraformersMC", "com.terraformersmc")
     strictMaven("https://maven.caffeinemc.net/releases", "CaffeineMC", "net.caffeinemc")
     strictMaven("https://maven.su5ed.dev/releases", "Sinytra", "org.sinytra.forgified-fabric-api")
+    strictMaven("https://maven.gegy.dev", "Gegy")
+    strictMaven("https://maven.nucleoid.xyz/releases", "Nucleoid")
+    strictMaven("https://jitpack.io", "Jitpack")
     ivy {
         url = uri("https://github.com/pajicadvance/Mixson/releases/download/")
         patternLayout {

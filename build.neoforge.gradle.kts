@@ -27,6 +27,9 @@ repositories {
     strictMaven("https://maven.su5ed.dev/releases", "Sinytra", "org.sinytra.forgified-fabric-api")
     strictMaven("https://thedarkcolour.github.io/KotlinForForge/", "Kotlin Forge")
     strictMaven("https://repo.nyon.dev/releases", "Kotlin Forge Again")
+    strictMaven("https://maven.gegy.dev", "Gegy")
+    strictMaven("https://maven.nucleoid.xyz/releases", "Nucleoid")
+    strictMaven("https://maven.theillusivec4.top/", "TheIllusiveC4")
     ivy {
         url = uri("https://github.com/pajicadvance/Mixson/releases/download/")
         patternLayout {
