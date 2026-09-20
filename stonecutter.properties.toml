@@ -60,8 +60,6 @@ dev.runtime_optionals = ["curios", "ok_zoomer", "lambdynamiclights", "shulkerbox
 ["26.1"]
 mod.mc_releases = ["26.1", "26.1.1", "26.1.2"]
 loader.neo = "26.1.2.107"
-dep.mixson.coords = "maven.modrinth:$id:$version"
-required.mixson = "2.2.0"
 runtime.sodium = "0.9.2+mc26.1.2"
 optional.lambdynamiclights = "4.11.2+26.1.2"
 optional.shulkerboxtooltip = "5.4.0+26.1.1"
@@ -90,8 +88,6 @@ optional.curios = "15.0.0+26.1.2"
 ["26.2"]
 mod.mc_releases = ["26.2"]
 loader.neo = "26.2.0.82"
-dep.mixson.coords = "maven.modrinth:$id:$version"
-required.mixson = "2.2.0"
 runtime.sodium = "0.9.2+mc26.2"
 optional.lambdynamiclights = "4.12.4+26.2"
 optional.shulkerboxtooltip = "5.4.0+26.2"
@@ -120,8 +116,6 @@ optional.curios = "16.0.0+26.2"
 ["26.3"]
 mod.mc_releases = ["26.3"]
 #loader.neo = "26.2.0.36-beta"
-dep.mixson.coords = "maven.modrinth:$id:$version"
-required.mixson = "2.2.0"
 runtime.sodium = "0.9.2+mc26.3"
 optional.lambdynamiclights = "4.13.0+26.3"
 optional.shulkerboxtooltip = "5.4.2+26.3"
