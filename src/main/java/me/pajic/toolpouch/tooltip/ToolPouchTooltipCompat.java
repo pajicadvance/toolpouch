@@ -2,6 +2,7 @@ package me.pajic.toolpouch.tooltip;
 
 import com.misterpemodder.shulkerboxtooltip.api.ShulkerBoxTooltipApi;
 import com.misterpemodder.shulkerboxtooltip.api.provider.PreviewProviderRegistry;
+import dev.kikugie.fletching_table.annotation.fabric.Entrypoint;
 import me.pajic.toolpouch.ToolPouch;
 import me.pajic.toolpouch.util.GameplayUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-@SuppressWarnings("unused")
+@Entrypoint("shulkerboxtooltip")
 public class ToolPouchTooltipCompat implements ShulkerBoxTooltipApi {
 
     @Override
