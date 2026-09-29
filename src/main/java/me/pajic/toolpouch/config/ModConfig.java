@@ -20,7 +20,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-@Version(version = 1)
+import java.util.LinkedHashSet;
+
+@Version(version = 2)
 public class ModConfig extends Config {
 
 	private final ValidatedAny<AllowedItem> allowedItem = new ValidatedAny<>(new AllowedItem());
@@ -68,6 +70,7 @@ public class ModConfig extends Config {
 			new AllowedItem("minecraft:spyglass", 1, 1),
 			new AllowedItem("minecraft:totem_of_undying", 1, 1),
 			new AllowedItem("improved-maps:atlas", 1, 0),
+			new AllowedItem("mapstitch:atlas", 1, 0),
 			new AllowedItem("sereneseasons:calendar", 1, 1),
 			new AllowedItem("spelunkery:magnetic_compass", 1, 1),
 			new AllowedItem("firmaciv:nav_clock", 1, 1),
@@ -97,6 +100,18 @@ public class ModConfig extends Config {
 	);
 	public InfoOverlaySettings infoOverlaySettings = new InfoOverlaySettings();
 	public ValidatedBoolean hideDebugInfoInSurvival = new ValidatedBoolean(false);
+
+	@Override
+	public void update(int deserializedVersion) {
+		if (deserializedVersion < 2 && allowedItems.stream().noneMatch(item -> item.id.get().equals("mapstitch:atlas"))) {
+			// MapStitch replaced Improved Maps. Preserve existing atlas limits and opt-outs.
+			allowedItems.stream().filter(item -> item.id.get().equals("improved-maps:atlas")).findFirst().ifPresent(atlas -> {
+				LinkedHashSet<AllowedItem> updated = new LinkedHashSet<>(allowedItems.get());
+				updated.add(new AllowedItem("mapstitch:atlas", atlas.maxStackSize.get(), atlas.maxStackCount.get()));
+				allowedItems.accept(updated);
+			});
+		}
+	}
 
 	public static class InfoOverlaySettings extends ConfigSection {
 		public OverlayFields overlayFields = new OverlayFields();

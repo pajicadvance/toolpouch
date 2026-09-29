@@ -100,6 +100,7 @@ By default, there is no limit on how many fireworks can be stored inside the Too
 
 ## Mod Compatibility
 
+- [MapStitch](https://modrinth.com/mod/mapstitch): Atlases are allowed in the pouch by default. Updating an existing configuration adds `mapstitch:atlas` with the same limits as `improved-maps:atlas`, if that entry is still allowed and no MapStitch entry exists. Otherwise, add `mapstitch:atlas` to the allowed items manually (maximum stack size `1`, maximum stack count `0` for no limit). Atlas updating and display while stored require a MapStitch version with Tool Pouch integration.
 - [Trinkets (Updated)](https://modrinth.com/mod/trinkets-updated), [Curios](https://modrinth.com/mod/curios), or [Ohmega](https://modrinth.com/mod/ohmega): Allows equipping the tool pouch as a trinket and opening it by pressing a keybind (default H).
 - [Locator Lodestones](https://modrinth.com/mod/locator_lodestones): Lodestone compasses stored in the tool pouch will show up on the locator bar.
 - [Serene Seasons](https://modrinth.com/mod/serene-seasons): Storing a calendar in the tool pouch will show the current season in the info overlay. There's also an optional setting to disable the calendar item tooltip so that the season can only be read from the tool pouch info overlay.
