@@ -1,0 +1,37 @@
+{
+  "server_command": [
+    "java",
+    "-Xmx2G",
+    "-cp",
+    "/absolute/path/to/server-minecraft.jar:/absolute/path/to/fabric-loader.jar:/absolute/path/to/other-server-library.jar",
+    "net.fabricmc.loader.impl.launch.knot.KnotServer",
+    "nogui"
+  ],
+  "client_command": [
+    "java",
+    "-Xmx2G",
+    "-Djava.library.path=/absolute/path/to/client-natives",
+    "-cp",
+    "/absolute/path/to/client-minecraft.jar:/absolute/path/to/fabric-loader.jar:/absolute/path/to/other-client-library.jar",
+    "net.fabricmc.loader.impl.launch.knot.KnotClient",
+    "--username",
+    "ToolPouchQA",
+    "--version",
+    "26.3",
+    "--gameDir",
+    "{run_dir}",
+    "--assetsDir",
+    "/absolute/path/to/assets",
+    "--assetIndex",
+    "REPLACE_WITH_INSTALLED_ASSET_INDEX",
+    "--accessToken",
+    "0",
+    "--quickPlayMultiplayer",
+    "127.0.0.1:{port}"
+  ],
+  "dependencies": [
+    "/absolute/path/to/fabric-api.jar",
+    "/absolute/path/to/fzzy_config.jar",
+    "/absolute/path/to/fabric-language-kotlin.jar"
+  ]
+}
