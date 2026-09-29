@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import me.pajic.toolpouch.util.ClientUtil;
 import me.pajic.toolpouch.util.ItemStackTemplateUtil;
+import me.pajic.toolpouch.util.PlayerExtension;
 import me.pajic.toolpouch.util.ToolPouchUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.Entity;
@@ -53,6 +54,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private void useElytraFromToolPouch(CallbackInfo ci) {
 		if (
 				(LivingEntity) (Object) this instanceof Player player &&
+				((PlayerExtension) player).toolpouch$isElytraEnabled() &&
 				ToolPouchUtil.toolPouchHasItem(player, stack -> ItemStackTemplateUtil.has(stack, DataComponents.GLIDER))
 		) {
 			ToolPouchUtil.updateElytraInToolPouch(player);

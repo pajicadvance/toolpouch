@@ -114,6 +114,18 @@ public class ModPayloads {
 		}
 	}
 
+    public record C2SToggleElytraPayload() implements CustomPacketPayload {
+        public static final Type<C2SToggleElytraPayload> TYPE = new Type<>(NetworkConstants.TOGGLE_ELYTRA);
+        public static final StreamCodec<RegistryFriendlyByteBuf, C2SToggleElytraPayload> CODEC = StreamCodec.unit(
+                new C2SToggleElytraPayload()
+        );
+
+        @Override
+        public @NotNull Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
 	public record C2SElytraBoostFromPouchPayload() implements CustomPacketPayload {
 		public static final Type<C2SElytraBoostFromPouchPayload> TYPE = new Type<>(NetworkConstants.ELYTRA_BOOST_FROM_POUCH);
 		public static final StreamCodec<RegistryFriendlyByteBuf, C2SElytraBoostFromPouchPayload> CODEC = StreamCodec.unit(

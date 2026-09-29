@@ -70,6 +70,11 @@ public class FabricEntrypoint implements ModInitializer {
                 entries.insertBefore(Items.COMPASS, ModItems.TOOL_POUCH, ModItems.NETHERITE_TOOL_POUCH)
         );
         ModPayloads.init();
+        PayloadTypeRegistry.serverboundPlay().register(ModPayloads.C2SToggleElytraPayload.TYPE, ModPayloads.C2SToggleElytraPayload.CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(
+                ModPayloads.C2SToggleElytraPayload.TYPE,
+                (_, context) -> NetworkEvents.toggleElytra(context.player())
+        );
         PayloadTypeRegistry.serverboundPlay().register(ModPayloads.C2SOpenToolPouchPayload.TYPE, ModPayloads.C2SOpenToolPouchPayload.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ModPayloads.C2SOpenShulkerBoxPayload.TYPE, ModPayloads.C2SOpenShulkerBoxPayload.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ModPayloads.C2SOpenEnderContainerPayload.TYPE, ModPayloads.C2SOpenEnderContainerPayload.CODEC);

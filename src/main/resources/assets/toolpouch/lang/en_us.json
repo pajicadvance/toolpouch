@@ -151,6 +151,9 @@
   "key.toolpouch.use_spyglass": "Use spyglass",
   "key.toolpouch.open_widget": "Open contextual selection widget",
   "key.toolpouch.open_ender_chest": "Open ender chest",
+  "key.toolpouch.toggle_elytra": "Toggle Pouch Elytra",
+  "message.toolpouch.elytra_enabled": "Pouch Elytra enabled",
+  "message.toolpouch.elytra_disabled": "Pouch Elytra disabled",
   "key.toolpouch.toggle_minimap": "Toggle minimap",
 
   "rrv.info.tool_pouches": "Tool pouches can store specific functional items in order to make them more useful and free up space from your inventory.",

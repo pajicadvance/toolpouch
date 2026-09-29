@@ -32,6 +32,7 @@ public class ModKeybinds {
     public static final KeyMapping USE_SPYGLASS = create(InputConstants.KEY_C, "use_spyglass");
     public static final KeyMapping OPEN_WIDGET = create(InputConstants.KEY_X, "open_widget");
     public static final KeyMapping OPEN_ENDER_CHEST = create(InputConstants.KEY_V, "open_ender_chest");
+	public static final KeyMapping TOGGLE_ELYTRA = create(InputConstants.UNKNOWN.getValue(), "toggle_elytra");
 	public static final KeyMapping TOGGLE_MINIMAP = create(InputConstants.KEY_M, "toggle_minimap");
 
     public static void onClientTick(Minecraft client) {
@@ -103,6 +104,9 @@ public class ModKeybinds {
 					player.playSound(SoundEvents.BUNDLE_INSERT);
 					MultiLoaderUtil.INSTANCE.sendToServer(new ModPayloads.C2SOpenToolPouchPayload(openMethod));
 				}
+			}
+			while (TOGGLE_ELYTRA.consumeClick()) {
+				MultiLoaderUtil.INSTANCE.sendToServer(new ModPayloads.C2SToggleElytraPayload());
 			}
 			if (TOGGLE_MINIMAP.consumeClick()) {
 				MinimapOverlay.minimapOn = !MinimapOverlay.minimapOn;

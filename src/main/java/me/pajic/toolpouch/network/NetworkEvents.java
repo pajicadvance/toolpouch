@@ -75,6 +75,15 @@ public class NetworkEvents {
 		((PlayerExtension) player).toolpouch$setArrowSlot(slot);
 	}
 
+    public static void toggleElytra(ServerPlayer player) {
+        PlayerExtension extension = (PlayerExtension) player;
+        boolean enabled = !extension.toolpouch$isElytraEnabled();
+        extension.toolpouch$setElytraEnabled(enabled);
+        player.sendSystemMessage(Component.translatable(
+                enabled ? "message.toolpouch.elytra_enabled" : "message.toolpouch.elytra_disabled"
+        ), true);
+    }
+
 	public static void elytraBoostFromPouch(ServerPlayer player) {
 		List<ItemStackTemplate> fireworks = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.is(Items.FIREWORK_ROCKET));
 		if (!fireworks.isEmpty()) {

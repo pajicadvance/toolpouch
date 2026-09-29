@@ -92,6 +92,11 @@ public class NeoforgeEntrypoint {
         PayloadRegistrar registrar = event.registrar("1");
         ModPayloads.init();
         registrar.playToServer(
+                ModPayloads.C2SToggleElytraPayload.TYPE,
+                ModPayloads.C2SToggleElytraPayload.CODEC,
+                (_, context) -> NetworkEvents.toggleElytra((ServerPlayer) context.player())
+        );
+        registrar.playToServer(
                 ModPayloads.C2SOpenToolPouchPayload.TYPE,
                 ModPayloads.C2SOpenToolPouchPayload.CODEC,
                 (payload, context) ->

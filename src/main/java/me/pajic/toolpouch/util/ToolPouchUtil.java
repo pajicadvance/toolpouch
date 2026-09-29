@@ -78,6 +78,8 @@ public class ToolPouchUtil {
 	}
 
 	public static ItemStackTemplate getElytraFromToolPouch(Player player, boolean allowBroken) {
+        // Keep displaying stored wings; the toggle only controls their use for flight.
+        if (!allowBroken && !((PlayerExtension) player).toolpouch$isElytraEnabled()) return null;
 		List<ItemStackTemplate> elytras = ToolPouchUtil.getItemsFromToolPouch(player, stack -> stack.get(DataComponents.GLIDER) != null);
 		if (!elytras.isEmpty()) {
 			for (ItemStackTemplate stack : elytras) {

@@ -57,6 +57,8 @@ Minimap appearance can be configured in the configuration screen, such as positi
 ### Elytra
 When stored in the Tool Pouch, it will function as if it's equipped in the chest slot. This allows you to fly and wear a chestplate at the same time!
 
+Assign the **Toggle Pouch Elytra** keybind in Controls to enable or disable flight using the pouch Elytra (unbound by default). An action-bar message confirms the change. The choice is saved per player and survives reconnects and respawns. Disabling it while gliding ends pouch-powered flight; an Elytra worn in the chest slot continues to work normally. Stored wings remain visible.
+
 By default, only one Elytra can be stored inside the Tool Pouch at the same time.
 
 ### Totem of Undying
